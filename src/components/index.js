@@ -2,5 +2,6 @@ import Login from './Login';
 import SignUp from './SignUp';
 import Dashboard from './Dashboard';
 import Book from './Book';
+import Header from './Header';
 
-export { Login, SignUp, Dashboard, Book };
+export { Header, Login, SignUp, Dashboard, Book };
