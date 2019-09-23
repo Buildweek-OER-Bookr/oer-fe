@@ -7,6 +7,10 @@ import GlobalStyles from './globalStyles';
 //import * as serviceWorker from './serviceWorker';
 
 const theme = {
+	fonts: {
+		josefin: "'Josefin Sans', sans-serif",
+		playfair: "'Playfair Display', 'Josefin Sans', sans-serif",
+	},
 	gray: 'rgba(85, 91, 110, 1)',
 	darkblue: 'rgba(0, 63, 145, 1)',
 	blue: 'rgba(107, 127, 215, 1)',
@@ -16,8 +20,8 @@ const theme = {
 
 ReactDOM.render(
 	<Router>
-		<GlobalStyles />
 		<ThemeProvider theme={theme}>
+			<GlobalStyles />
 			<OERBookr />
 		</ThemeProvider>
 	</Router>,

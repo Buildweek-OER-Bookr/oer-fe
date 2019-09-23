@@ -3,11 +3,11 @@ import { createGlobalStyle } from 'styled-components';
 export default createGlobalStyle`
 	@font-face {
 		font-family: 'Josefin Sans', sans-serif;
-		src: url('./fonts/JosefinSans-Regulat.ttf');
+		src: url('./fonts/JosefinSans-Regular.ttf');
 	}
 	@font-face {
 		font-family: 'Playfair Display', 'Josefin Sans', sans-serif;
-		src: url('./fonts/PlayfairDisplay-Regulat.ttf');
+		src: url('./fonts/PlayfairDisplay-Regular.ttf');
 	}
 	html, body, div, span, applet, object, iframe,
 	h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -35,8 +35,8 @@ export default createGlobalStyle`
 		display: block;
 	}
 	body {
-		line-height: 1;
-		font-family: 'Josefin Sans';
+		font-family: ${props => props.theme.fonts.josefin};
+		color: ${props => props.theme.black};
 	}
 	ol, ul {
 		list-style: none;
@@ -59,5 +59,28 @@ export default createGlobalStyle`
 	a {
 		color: inherit;
 		text-decoration: none;
+	}
+	h1, h2, h3, h4 {
+		font-family: ${props => props.theme.fonts.playfair};
+	}
+	h1 {
+		font-size: 5rem;
+	}
+	h2 {
+		font-size: 2.5rem;
+	}
+	h3 {
+		font-size: 2.25rem;
+		line-height: 5rem;
+	}
+	h4 {
+		font-size: 1.75rem;
+	}
+	p {
+		font-size: 1.5rem;
+		line-height: 2rem;
+	}
+	.anticon {
+		vertical-align: middle;
 	}
 `;
