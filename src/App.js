@@ -1,7 +1,7 @@
 import React from 'react';
 //import { Form, Select, InputNumber, DatePicker, Switch, Slider, Button } from 'antd';
 import { Route, Link } from 'react-router-dom';
-import { Login, SignUp, Dashboard, Book } from './components';
+import { Header, Login, SignUp, Dashboard, Book } from './components';
 //import SignUp from './components/SignUp';
 //import Book from './components/Book';
 
@@ -11,9 +11,7 @@ const App = () => {
 
 	return (
 		<div className="app">
-			<header>
-				<Link to="/login">Login</Link>
-			</header>
+			<Header />
 			<main>
 				<Route path="/login" component={Login} />
 				<Route path="/signup" component={SignUp} />

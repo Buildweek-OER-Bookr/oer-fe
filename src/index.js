@@ -1,12 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import OERBookr from './App';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
+import OERBookr from './App';
+import GlobalStyles from './globalStyles';
 //import * as serviceWorker from './serviceWorker';
+
+const theme = {
+	gray: 'rgba(85, 91, 110, 1)',
+	darkblue: 'rgba(0, 63, 145, 1)',
+	blue: 'rgba(107, 127, 215, 1)',
+	white: 'rgba(244, 250, 255, 1)',
+	black: 'rgba(8, 9, 10, 1)',
+}
 
 ReactDOM.render(
 	<Router>
-		<OERBookr />
+		<GlobalStyles />
+		<ThemeProvider theme={theme}>
+			<OERBookr />
+		</ThemeProvider>
 	</Router>,
 	document.getElementById('root')
 );
