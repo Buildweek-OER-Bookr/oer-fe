@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import logo from '../images/logo.png';
 
@@ -43,12 +43,12 @@ const StyledHeader = styled.header`
 const Header = (props) => {
 	const menuUrls = [
 		{
-			name: 'Book List',
+			name: 'Home',
 			url: '/dashboard',
 		},
 		{
-			name: 'Book Details',
-			url: '/dashboard/1',
+			name: 'Book List',
+			url: '/booklist',
 		},
 		{
 			name: 'Logout',
@@ -58,7 +58,7 @@ const Header = (props) => {
 	return(
 		<StyledHeader>
 			<div className="logo">
-				<img src={logo} alt="OER Bookr"/>
+				<Link to="/dashboard"><img src={logo} alt="OER Bookr"/></Link>
 			</div>
 			{menuUrls.map(menu => (
 				<NavLink key={menu.url} to={menu.url} activeClassName="active">{menu.name}</NavLink>

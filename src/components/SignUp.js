@@ -1,9 +1,9 @@
 import React from 'react';
-import { Redirect, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Form, Input, Button } from 'antd';
 
 const Login = (props) => {
-	const { history, location, match } = props;
+	const { history } = props;
 
 	const onSubmitLogin = (e) => {
 		e.preventDefault();
