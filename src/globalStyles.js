@@ -83,4 +83,22 @@ export default createGlobalStyle`
 	.anticon {
 		vertical-align: middle;
 	}
+
+	.container {
+		padding: 50px 75px 75px;
+		border-bottom: 1px solid ${props => props.theme.darkblue};
+		&.noborder {
+			border-bottom: none;
+		}
+		h1 {
+			padding-bottom: 30px;
+		}
+		h2 {
+			padding-top: 30px;
+			padding-bottom: 15px;
+			&.nopad {
+				padding: 0;
+			}
+		}
+	}
 `;
