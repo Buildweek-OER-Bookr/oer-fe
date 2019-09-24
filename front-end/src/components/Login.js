@@ -21,7 +21,7 @@ const Login = (props) => {
 					<Input type="text" />
 				</Form.Item>
 				<Button type="primary" htmlType="submit">Login</Button>
-				<Link to="/signup" color= "teal"><Button style={{ marginLeft: 8 }}>Sign up</Button></Link>
+				<Link to="/signup"><Button style={{ marginLeft: 8 }}>Sign up</Button></Link>
 			</Form>
 		</div>
 	)
