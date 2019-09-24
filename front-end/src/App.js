@@ -1,26 +1,29 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import styled from 'styled-components';
+import { Route } from 'react-router-dom';
+import { Header, Login, SignUp, Dashboard, BookList, Book } from './components';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const StyledApp = styled.div`
+	main {
+		position: relative;
+		margin-left: auto;
+		max-width: calc(100% - 250px);
+	}
+`;
+
+const App = () => {
+	return (
+		<StyledApp>
+			<Header />
+			<main>
+				<Route path="/login" component={Login} />
+				<Route path="/signup" component={SignUp} />
+				<Route exact path="/dashboard" component={Dashboard} />
+				<Route exact path="/booklist" component={BookList} />
+				<Route path="/booklist/:bookid" component={Book} />
+			</main>
+		</StyledApp>
+	);
+};
 
 export default App;
