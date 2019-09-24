@@ -1,6 +1,7 @@
 import React from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import { Form, Input, Button } from 'antd';
+import 'semantic-ui-css/semantic.min.css';
 
 const Login = (props) => {
 	const { history, location, match } = props;
