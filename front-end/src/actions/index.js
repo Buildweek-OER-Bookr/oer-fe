@@ -1,7 +1,7 @@
 import axios from "axios";
 // import { Book } from "../components";
 
-const BASE_URL = "https:// .herokuapp.com";
+const BASE_URL = "https:/.herokuapp.com";
 
 // export const LOGIN_START = "LOGIN_START";
 // export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
