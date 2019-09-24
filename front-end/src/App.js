@@ -1,26 +1,37 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import styled from 'styled-components';
+//import { Form, Select, InputNumber, DatePicker, Switch, Slider, Button } from 'antd';
+import { Route, Link } from 'react-router-dom';
+import { Header, Login, SignUp, Dashboard, Book } from './components';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+import Registration from './components/SignUp';
+import BookCard from './components/BookCard';
+
+//import Book from './components/Book';
+
+//const { Option } = Select;
+const StyledApp = styled.div`
+	main {
+		position: relative;
+		margin-left: auto;
+		max-width: calc(100% - 250px);
+	}
+`;
+
+const App = () => {
+	return (
+		<StyledApp>
+			<Header />
+			<main>
+				<Route path="/login" component={Login} />
+				<Route path="/signup" component={Registration} />
+				<Route path="/dashboard" component={Dashboard} />
+				<Route path="/dashboard/:bookid" component={Book} />
+				<Route path="/bookcard" component={BookCard} />
+
+			</main>
+		</StyledApp>
+	);
+};
 
 export default App;
