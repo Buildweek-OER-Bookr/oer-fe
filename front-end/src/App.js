@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { Route } from 'react-router-dom';
 import { Header, Login, Registration, Dashboard, BookList, Book } from './components';
 
+import PrivateRoute from "./components/PrivateRoute";
+
 import { connect } from 'react-redux';
 import { getData } from './actions/index';
 
@@ -13,7 +15,7 @@ const StyledApp = styled.div`
 		position: relative;
 		margin-top: 80px;
 		max-height: calc(100vh - 80px);
-		@media screen and (min-width: 1024px) {
+		@media screen and (min-width: 1024px) and (min-height: 600px) {
 			margin-top: 0;
 			max-height: 100%;
 			margin-left: auto;
@@ -36,11 +38,9 @@ const App = (props) => {
 			<main>
 				<Route path="/login" component={Login} />
 				<Route path="/signup" component={Registration} />
-				<Route path="/dashboard" component={Dashboard} />
-				<Route exact path="/books" component={BookList} />
-				<Route path="/books/:bookid" component={Book} />
-				{/* <Route path="/bookcard" component={BookCard} /> */}
-
+				<PrivateRoute exact path="/dashboard" component={Dashboard} />
+				<PrivateRoute exact path="/books" component={BookList} />
+				<PrivateRoute exact path="/books/:bookid" component={Book} />
 			</main>
 		</StyledApp>
 	);
