@@ -8,14 +8,14 @@ import { createStore, applyMiddleware } from "redux";
 import { ThemeProvider } from 'styled-components';
 import OERBookr from './App';
 import GlobalStyles from './globalStyles';
-import {reducer} from './reducer';
+import { reducer } from './reducer';
 
 const store = createStore(reducer, applyMiddleware(thunk));
 
 const theme = {
 	fonts: {
-		josefin: "'Josefin Sans', sans-serif",
-		playfair: "'Playfair Display', 'Josefin Sans', sans-serif",
+		josefin: "'Josefin Sans', 'Lato', sans-serif",
+		lato: "'Lato', 'Josefin Sans' sans-serif",
 	},
 	gray: 'rgba(85, 91, 110, 1)',
 	darkblue: 'rgba(0, 63, 145, 1)',
@@ -26,12 +26,12 @@ const theme = {
 
 ReactDOM.render(
 	<Provider store={store}>
-	<Router>
-		<ThemeProvider theme={theme}>
-			<GlobalStyles />
-			<OERBookr />
-		</ThemeProvider>
-	</Router>
+		<Router>
+			<ThemeProvider theme={theme}>
+				<GlobalStyles />
+				<OERBookr />
+			</ThemeProvider>
+		</Router>
 	</Provider>,
 	document.getElementById('root')
 );
