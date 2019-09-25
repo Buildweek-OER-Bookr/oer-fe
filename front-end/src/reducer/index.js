@@ -25,6 +25,36 @@ import {
 } from "../actions";
 
 const initialState = {
+	header: {
+		menu: [
+			{
+				name: 'Home',
+				url: '/dashboard',
+			},
+			{
+				name: 'Book List',
+				url: '/books',
+			},
+			{
+				name: 'Logout',
+				url: '/logout',
+			}
+		],
+		contacts: [
+			{
+				url: 'https://twitter.com/oerbookr',
+				type: 'twitter'
+			},
+			{
+				url: 'https://www.linkedin.com/in/oerbookr',
+				type: 'linkedin'
+			},
+			{
+				url: 'https://github.com/orgs/Buildweek-OER-Bookr/',
+				type: 'github'
+			},
+		]
+	},
 	books: [],
 	reviews: [],
 	error: ""
