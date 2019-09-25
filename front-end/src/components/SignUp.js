@@ -1,9 +1,8 @@
 import React, { useContext, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import { Form, Field, withFormik } from "formik";
-import { Form as SemanticForm, Segment, Button, Grid, Header,  Image, Message } from "semantic-ui-react";
+import { Form as SemanticForm, Segment, Button, Grid, Header, Image, Message } from "semantic-ui-react";
 import * as yup from "yup";
-import 'semantic-ui-css/semantic.min.css';
 // import logo from '../images/logo.png';
 
 
