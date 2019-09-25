@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { Route } from 'react-router-dom';
 import { Header, Login, Registration, Dashboard, BookList, Book } from './components';
+
+import { connect } from 'react-redux';
+import { getData } from './actions/index';
 
 const StyledApp = styled.div`
 	max-width: 2160px;
@@ -19,7 +22,14 @@ const StyledApp = styled.div`
 	}
 `;
 
-const App = () => {
+const App = (props) => {
+	const { dispatch, books } = props;
+	useEffect(() => {
+		if(books.length === 0) {
+			getData()(dispatch);
+		}
+		return () => { };
+	}, []);
 	return (
 		<StyledApp>
 			<Header />
@@ -36,4 +46,5 @@ const App = () => {
 	);
 };
 
-export default App;
+const mapStateToProps = state => ({ books: state.books })
+export default connect(mapStateToProps)(App);
