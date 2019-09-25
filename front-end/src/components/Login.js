@@ -1,12 +1,8 @@
-
-// import React, { Component } from 'react';
-import { Redirect, Link } from 'react-router-dom';
-// import { Form, Input, Button } from 'antd';
+import React, { useState } from "react";
 import axiosWithAuth from "../axiosWithAuth";
 
 
 
-import React, { useState } from "react";
 
 
 const Login = ({ history }) => {
