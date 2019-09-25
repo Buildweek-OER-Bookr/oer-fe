@@ -18,6 +18,7 @@ const Dashboard = (props) => {
 				enterButton
 				onSearch={search => console.log(search)}
 				placeholder="Search by book title"
+				searchBar={this.search}
 			/>
 		</div>
 		<BookList/>

@@ -1,7 +1,7 @@
 import axios from "axios";
 // import { Book } from "../components";
 
-const BASE_URL = "https:/.herokuapp.com";
+const BASE_URL = "https://oer-bookr.herokuapp.com/api/";
 
 // export const LOGIN_START = "LOGIN_START";
 // export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
@@ -30,6 +30,9 @@ export const ADD_REVIEW_FAILURE = "ADD_REVIEW_FAILURE";
 export const DELETE_REVIEW_START = "DELETE_REVIEW_START";
 export const DELETE_REVIEW_SUCCESS = "DELETE_REVIEW_SUCCESS";
 export const DELETE_REVIEW_FAILURE = "DELETE_REVIEW_FAILURE";
+
+export const SEARCH_INPUT_CHANGE = "SEARCH_INPUT";
+
 
 
 // export const login = ( history, credentials ) => {
@@ -82,7 +85,7 @@ export const deleteData = (deleteBook) => {
     return dispatch => {
         dispatch({ type: DELETE_BOOKS_START });
     axios
-        .delete(`${BASE_URL}/${deleteBook.id}`)
+        .delete(`${BASE_URL}/books/${id}`)
         .then(res => {
             console.log("book deleted", res);
             dispatch({ type: DELETE_BOOKS_SUCCESS, payload: res.data })
@@ -115,7 +118,7 @@ export const getReview = () => {
   return dispatch => {
     dispatch({ type: FETCH_REVIEW_START });
     axios
-      .get(`${BASE_URL}/review`)
+      .get(`${BASE_URL}/reviews`)
       .then(res => {
         dispatch({ type: FETCH_REVIEW_SUCCESS, payload: res.data });
       })
@@ -130,7 +133,7 @@ export const deleteReview= (id) => {
     return dispatch => {
         dispatch({ type: DELETE_REVIEW_START });
     axios
-        .delete(`${BASE_URL}/reviews/${id}`)
+        .delete(`${BASE_URL}/review/${id}`)
         .then(res => {
             console.log("REVIEW deleted", res);
             dispatch({ type: DELETE_REVIEW_SUCCESS, payload: res.data })
@@ -141,3 +144,9 @@ export const deleteReview= (id) => {
         })
     }
 }
+
+export const search = input => {
+  return dispatch => {
+  dispatch({ type: SEARCH_INPUT_CHANGE, payload: input });
+};
+

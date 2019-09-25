@@ -5,6 +5,7 @@ import { Form as SemanticForm, Segment, Button, Grid, Header,  Image, Message } 
 import * as yup from "yup";
 import 'semantic-ui-css/semantic.min.css';
 // import logo from '../images/logo.png';
+import axiosWithAuth from "../axiosWithAuth";
 
 
 const Registration = ({ errors, touched, status, history }) => {

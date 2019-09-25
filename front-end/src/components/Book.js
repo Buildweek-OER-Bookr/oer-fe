@@ -1,33 +1,66 @@
 import React from 'react';
-import styled from 'styled-components';
+// import styled from 'styled-components';
+// import { addReview, getData, getReviews } from '../../store/actions';
 
-const StyledDetails = styled.div`
-	.book {
+// const StyledDetails = styled.div`
+// 	.book {
 		
-	}
-	.reviews {
+// 	}
+// 	.reviews {
 
-	}
-`;
+// 	}
+// `;
 
 
-const Book = (props) => {
-	//const { history, location, match } = props;
+// const Book = (props) => {
+// 	//const { history, location, match } = props;
+// 	const book = props.books.find(book => book.id === id);
+// 	return (
+// 		<StyledDetails>
+// 			<div className="buttons">
+//         <Link to={`/book/${id}/review`}>
+//           <Button>Write a Review</Button>
+//         </Link>
+//         <Button onClick={e => props.handleDeleteBook(e, id)}>
+//           Delete Book
+//         </Button>
+//       </div>
 
-	return (
-		<StyledDetails>
-			<div className="container book">
-				<h1>Book Title</h1>
-				<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit excepturi odio molestiae soluta animi sit alias nobis quas error vel? Iste suscipit perspiciatis tempora accusamus, porro nihil! Exercitationem, atque maxime.</p>
-			</div>
-			<div className="container reviews">
-				<h2 className="nopad">Reviews</h2>
-				<div className="review">
-					
-				</div>
-			</div>
-		</StyledDetails>
-	)
-};
+//         <img src={book.image}  />
+//       </div>
+// 	  <Review {...props} />
 
-export default Book;
+// 		</StyledDetails>
+// 	)
+// };
+
+
+const Book = props => {
+	  const id = getdata(props.match.params.id);
+	  const book = props.books.find(book => book.id === id);
+	
+	  return (
+	    <div>
+	      <div className="buttons">
+	        <Link to={`/book/${id}/addreview`}>
+	          <Button>Write a Review</Button>
+	        </Link>
+	        <Button onClick={e => props.handleDeleteBook(e, id)}>
+	          Delete Book
+	        </Button>
+	      </div>
+		  <div className="book-body">
+         <div className="book-detail">
+           <h2>{props.book.title}</h2>
+           <h3>{props.book.author}</h3>
+           <p>{props.book.publisher}</p>
+           <p>{props.book.description}</p>
+         </div>
+
+         <img src={props.book.image}  />
+       </div>
+       {/* <ReviewList /> */}
+     </div>
+	      
+	  );
+	};
