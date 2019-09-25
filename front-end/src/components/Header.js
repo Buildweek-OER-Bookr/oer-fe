@@ -11,11 +11,14 @@ const StyledHeader = styled.header`
 	left: 0;
 	width: 100%;
 	height: 80px;
-	padding: 0 75px;
+	padding: 0 25px;
 	display: flex;
 	flex-flow: row nowrap;
 	background-color: ${props => props.theme.white};
-	@media screen and (min-width: 1024px) {
+	@media screen and (min-width: 720px) {
+		padding: 0 75px;
+	}
+	@media screen and (min-width: 1024px) and (min-height: 600px) {
 		padding: 0;
 		border-bottom: none;
 		flex-flow: column nowrap;
@@ -28,7 +31,7 @@ const StyledHeader = styled.header`
 		width: 100%;
 		max-width: 80px;
 		flex-basis: 80px;
-		@media screen and (min-width: 1024px) {
+		@media screen and (min-width: 1024px) and (min-height: 600px) {
 			padding: 20px;
 			max-width: 100%;
 			flex-basis: auto;
@@ -39,19 +42,20 @@ const StyledHeader = styled.header`
 		flex-flow: row nowrap;
 		flex-grow: 1;
 		font-family: ${props => props.theme.fonts.josefin};
-		@media screen and (min-width: 1024px) {
+		@media screen and (min-width: 1024px) and (min-height: 600px) {
 			flex-flow: column nowrap;
 		}
 		a {
 			font-size: 1.25rem;
 			line-height: 72px;
+			white-space: nowrap;
 			padding: 8px 20px 0;
 			color: ${props => props.theme.blue};
 			&.active {
 				color: ${props => props.theme.white};
 				background-color: ${props => props.theme.blue};
 			}
-			@media screen and (min-width: 1024px) {
+			@media screen and (min-width: 1024px) and (min-height: 600px) {
 				width: 100%;
 				font-size: 1.5rem;
 				line-height: 4.5rem;
@@ -64,6 +68,7 @@ const StyledHeader = styled.header`
 		}
 	}
 	.contacts {
+		display: none;
 		.list {
 			display: flex;
 			flex-flow: row nowrap;
@@ -84,7 +89,10 @@ const StyledHeader = styled.header`
 				color: ${props => props.theme.white};
 			}
 		}
-		@media screen and (min-width: 1024px) {
+		@media screen and (min-width: 600px) {
+			display: block;
+		}
+		@media screen and (min-width: 1024px) and (min-height: 600px) {
 			position: absolute;
 			bottom: 0;
 			left: 0;

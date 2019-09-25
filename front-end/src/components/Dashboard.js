@@ -15,7 +15,7 @@ const Dashboard = (props) => {
 				<h1>Introduction</h1>
 				<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Itaque est deserunt nihil rerum illo ut, nesciunt repellendus. Aliquam possimus quae totam adipisci perspiciatis debitis tempora expedita voluptatum odio, sapiente id.</p>
 
-				<h2>Search by book title, author or publisher</h2>
+				<h2>Search by book title, author, publisher or tag</h2>
 				<Search
 					enterButton
 					onSearch={onSearch}

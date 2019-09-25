@@ -3,6 +3,18 @@ import './fonts/oerbookr.css';
 export default createGlobalStyle`
 	@import url(${props => props.theme.preload.semanticui});
 	@import url('https://fonts.googleapis.com/css?family=Josefin+Sans:300,400|Lato:300,400&display=swap');
+	:root {
+		font-size: 80%;
+		@media screen and (min-width: 720px) {
+			font-size: 100%;
+		}
+		@media screen and (min-width: 1280px) {
+			font-size: 90%;
+		}
+		@media screen and (min-width: 1366px) {
+			font-size: 100%;
+		}
+	}
 	* {
 		box-sizing: border-box;
 		outline: 0;
@@ -52,6 +64,9 @@ export default createGlobalStyle`
 		border-collapse: collapse;
 		border-spacing: 0;
 	}
+	button:not(:disabled) {
+		cursor: pointer;
+	}
 	
 	h1, h2, h3, h4 {
 		font-family: ${props => props.theme.fonts.josefin};
@@ -84,8 +99,11 @@ export default createGlobalStyle`
 	}
 
 	.content {
-		padding: 50px 75px 75px;
+		padding: 50px 25px 75px;
 		border-bottom: 1px solid ${props => props.theme.darkblue};
+		@media screen and (min-width: 720px) {
+			padding: 50px 75px 75px;
+		}
 		&.noborder {
 			border-bottom: none;
 		}

@@ -5,16 +5,14 @@ import styled from 'styled-components';
 const StyledDetails = styled.div`
 	.book {
 		display: flex;
+		flex-wrap: wrap;
 		justify-content: space-between;
 		.column {
 			width: 100%;
-			&:first-child {
-				max-width: calc(35% - 20px);
-				flex-basis: calc(35% - 20px);
-			}
+			max-width: 100%;
+			flex-basis: 100%;
 			&:last-child {
-				max-width: calc(65% - 20px);
-				flex-basis: calc(65% - 20px);
+				padding-top: 5rem;
 			}
 			img {
 				display: block;
@@ -22,6 +20,19 @@ const StyledDetails = styled.div`
 				object-fit: contain;
 				min-height: 300px;
 				max-height: 600px;
+			}
+		}
+		@media screen and (min-width: 1280px) {
+			.column {
+				&:first-child {
+					max-width: calc(35% - 20px);
+					flex-basis: calc(35% - 20px);
+				}
+				&:last-child {
+					padding-top: 0;
+					max-width: calc(65% - 20px);
+					flex-basis: calc(65% - 20px);
+				}
 			}
 		}
 	}
@@ -45,7 +56,7 @@ const StyledDetails = styled.div`
 		padding: 30px 0;
 		blockquote {
 			position: relative;
-			padding: 30px;
+			padding: 30px 50px;
 			font-size: 1.75rem;
 			line-height: 2.25rem;
 			text-align: center;
@@ -158,17 +169,17 @@ const Book = (props) => {
 						</div>
 						<div className="book-info">
 							<h4>Summary:</h4>
-							<p>{book.summary ? book.summary : 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit excepturi odio molestiae soluta animi sit alias nobis quas error vel? Iste suscipit perspiciatis tempora accusamus, porro nihil! Exercitationem, atque maxime.'}</p>
+							<p>{book.description ? book.description : null}</p>
 						</div>
 						<div className="book-info">
 							<h4>Authors:</h4>
 							<p>
 								{
 									book.authors.map((author, i) => (
-											<span key={author.id}>
-												{author.name}{i !== book.authors.length - 1 ? ', ' : null}
-											</span>
-										)
+										<span key={author.id}>
+											{author.name}{i !== book.authors.length - 1 ? ', ' : null}
+										</span>
+									)
 									)
 								}
 							</p>
@@ -181,6 +192,10 @@ const Book = (props) => {
 							<h4>License:</h4>
 							<p>{book.license}</p>
 						</div> : null}
+						<div className="book-info">
+							<h4>Tag:</h4>
+							<p>{book.tag}</p>
+						</div>
 						<div className="book-info">
 							<h4>Rating:</h4>
 							<p className="stars">
@@ -195,7 +210,7 @@ const Book = (props) => {
 									<i className="icon-download"></i> Access Link
 								</a>
 							</button>
-							{book.reviews.length === 0 ? <button><i className="icon-plus"></i> Add Review</button> : null } 
+							{book.reviews.length === 0 ? <button><i className="icon-plus"></i> Add Review</button> : null}
 							<button><i className="icon-trash-empty"></i> Remove</button>
 						</div>
 					</div>
@@ -217,7 +232,7 @@ const Book = (props) => {
 						) : null
 					}
 				</div>
-			</div> : null }
+			</div> : null}
 		</StyledDetails>
 	)
 };
