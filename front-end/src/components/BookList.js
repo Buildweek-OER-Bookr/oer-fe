@@ -1,16 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { getData } from './../actions/index';
 
 const StyledBooks = styled.div`
 	h4 {
 		padding-bottom: 15px;
-	}
-	.book-list {
-		display: grid;
-		grid-template-columns: 1fr 1fr 1fr;
-		grid-template-rows: minmax(30px, auto);
-		grid-gap: 30px 30px;
 	}
 	.book {
 		padding: 30px;
@@ -18,16 +14,6 @@ const StyledBooks = styled.div`
 		color: ${props => props.theme.black};
 		border: 1px solid ${props => props.theme.blue};
 		background-color: ${props => props.theme.white};
-		grid-column: span 2;
-		grid-row: span 1;
-		&:nth-child(6n + 1) {
-			grid-column: span 1;
-			grid-row: span 2;
-		}
-		&:nth-child(6n + 5) {
-			grid-column: span 1;
-			grid-row: span 2;
-		}
 		p {
 			font-size: 1.25rem;
 			line-height: 1.7rem;
@@ -44,46 +30,21 @@ const StyledBooks = styled.div`
 	}
 `;
 
-const Dashboard = (props) => {
-	//const { history, location, match } = props;
-	const books = [
-		{
-			id: 1,
-			title: 'Book Title Here',
-			desc: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Inventore, sit aspernatur voluptas consequatur cupiditate dignissimos ducimus eum explicabo, in aperiam aliquam. Perspiciatis culpa dolor laboriosam quisquam provident, laborum nihil eum!'
-		},
-		{
-			id: 2,
-			title: 'Book Title Here',
-			desc: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Inventore, sit aspernatur voluptas consequatur cupiditate dignissimos ducimus eum explicabo, in aperiam aliquam. Perspiciatis culpa dolor laboriosam quisquam provident, laborum nihil eum!'
-		},
-		{
-			id: 3,
-			title: 'Book Title Here',
-			desc: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Inventore, sit aspernatur voluptas consequatur cupiditate dignissimos ducimus eum explicabo, in aperiam aliquam. Perspiciatis culpa dolor laboriosam quisquam provident, laborum nihil eum!'
-		},
-		{
-			id: 4,
-			title: 'Book Title Here',
-			desc: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Inventore, sit aspernatur voluptas consequatur cupiditate dignissimos ducimus eum explicabo, in aperiam aliquam. Perspiciatis culpa dolor laboriosam quisquam provident, laborum nihil eum!'
-		},
-		{
-			id: 5,
-			title: 'Book Title Here',
-			desc: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Inventore, sit aspernatur voluptas consequatur cupiditate dignissimos ducimus eum explicabo, in aperiam aliquam. Perspiciatis culpa dolor laboriosam quisquam provident, laborum nihil eum!'
-		},
-		{
-			id: 6,
-			title: 'Book Title Here',
-			desc: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Inventore, sit aspernatur voluptas consequatur cupiditate dignissimos ducimus eum explicabo, in aperiam aliquam. Perspiciatis culpa dolor laboriosam quisquam provident, laborum nihil eum!'
+const BookList = (props) => {
+	console.log(props)	
+	const { dispatch, books } = props;
+	useEffect(() => {
+		if(books.length === 0) {
+			getData()(dispatch);
 		}
-	];
+		return () => { };
+	}, []);
 	return (
-		<StyledBooks className="container noborder">
+		<StyledBooks className="content noborder">
 			<h1>Book List</h1>
-			<div className="book-list">
+			<div className="grid books">
 				{
-					books.map(book => <Link key={book.id} to={`/booklist/${book.id}`} className="book">
+					books.map(book => <Link key={book.id} to={`/books/${book.id}`} className="grid-item book">
 						<h4>{book.title}</h4>
 						<p>{book.desc}</p>
 					</Link>)
@@ -93,4 +54,5 @@ const Dashboard = (props) => {
 	)
 };
 
-export default Dashboard;
+const mapStateToProps = state => ({ books: state.books });
+export default connect(mapStateToProps)(BookList);

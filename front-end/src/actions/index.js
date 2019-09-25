@@ -1,7 +1,7 @@
 import axios from "axios";
 // import { Book } from "../components";
 
-const BASE_URL = "https:/.herokuapp.com";
+const BASE_URL = "https://oer-bookr.herokuapp.com/api";
 
 // export const LOGIN_START = "LOGIN_START";
 // export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
@@ -59,85 +59,96 @@ export const DELETE_REVIEW_FAILURE = "DELETE_REVIEW_FAILURE";
 //       history.push("/Dashboard");
 //     }) 
 //     .catch(err => console.log("login error ", err));
-  
+
 // };
 
+const configRequest = (method, url, data, token) => {
+	return {
+		method: method,
+		url: url,
+		data: data,
+		headers: {
+			'Authorization': `${token}`,
+		},
+		json: true
+	}
+};
 
 export const getData = () => {
-  return dispatch => {
-    dispatch({ type: FETCH_BOOKS_START });
-    axios
-      .get(`${BASE_URL}`)
-      .then(res => {
-        dispatch({ type: FETCH_BOOKS_SUCCESS, payload: res.data });
-      })
-      .catch(err => {
-        dispatch({ type: FETCH_BOOKS_FAILURE, payload: err.res });
-      });
-  };
+	return dispatch => {
+		dispatch({ type: FETCH_BOOKS_START });
+		axios(configRequest('GET', `${BASE_URL}/books`, null, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1lbHF1aSIsImlhdCI6MTU2OTQwMjg3NCwiZXhwIjoxNTY5NDg5Mjc0fQ.VHXAxUCFjeNYqkBcSMZ-QkhEtnuxGoqGBXKKQehEsgY'))
+			.then(res => {
+				dispatch({ type: FETCH_BOOKS_SUCCESS, payload: res.data });
+			})
+			.catch(err => {
+				console.log(err);
+				dispatch({ type: FETCH_BOOKS_FAILURE, payload: err.res });
+			});
+	};
 };
 
 
 export const deleteData = (deleteBook) => {
-    return dispatch => {
-        dispatch({ type: DELETE_BOOKS_START });
-    axios
-        .delete(`${BASE_URL}/${deleteBook.id}`)
-        .then(res => {
-            console.log("book deleted", res);
-            dispatch({ type: DELETE_BOOKS_SUCCESS, payload: res.data })
-        })
-        .catch(error => {
-            console.log(" axios request error", error);
-            dispatch({ type: DELETE_BOOKS_FAILURE, payload: error.res })
-        })
-    }
+	return dispatch => {
+		dispatch({ type: DELETE_BOOKS_START });
+		axios
+			.delete(`${BASE_URL}/${deleteBook.id}`)
+			.then(res => {
+				console.log("book deleted", res);
+				dispatch({ type: DELETE_BOOKS_SUCCESS, payload: res.data })
+			})
+			.catch(error => {
+				console.log(" axios request error", error);
+				dispatch({ type: DELETE_BOOKS_FAILURE, payload: error.res })
+			})
+	}
 }
 
 
 
 export const addReview = (newReview) => {
-  return dispatch => {
-    dispatch({ type: ADD_REVIEW_START });
-    axios
-    .post(`${BASE_URL}/review`, newReview)
-      .then(res => {
-        dispatch({ type: ADD_REVIEW_SUCCESS, payload: res.data });
-      })
-      .catch(err => {
-        dispatch({ type: ADD_REVIEW_FAILURE, payload: err.res });
-      });
-  };
+	return dispatch => {
+		dispatch({ type: ADD_REVIEW_START });
+		axios
+			.post(`${BASE_URL}/review`, newReview)
+			.then(res => {
+				dispatch({ type: ADD_REVIEW_SUCCESS, payload: res.data });
+			})
+			.catch(err => {
+				dispatch({ type: ADD_REVIEW_FAILURE, payload: err.res });
+			});
+	};
 }
 
 
 export const getReview = () => {
-  return dispatch => {
-    dispatch({ type: FETCH_REVIEW_START });
-    axios
-      .get(`${BASE_URL}/review`)
-      .then(res => {
-        dispatch({ type: FETCH_REVIEW_SUCCESS, payload: res.data });
-      })
-      .catch(err => {
-        dispatch({ type: FETCH_REVIEW_FAILURE, payload: err.res });
-      });
-  };
+	return dispatch => {
+		dispatch({ type: FETCH_REVIEW_START });
+		axios
+			.get(`${BASE_URL}/review`)
+			.then(res => {
+				dispatch({ type: FETCH_REVIEW_SUCCESS, payload: res.data });
+			})
+			.catch(err => {
+				dispatch({ type: FETCH_REVIEW_FAILURE, payload: err.res });
+			});
+	};
 };
 
 
-export const deleteReview= (id) => {
-    return dispatch => {
-        dispatch({ type: DELETE_REVIEW_START });
-    axios
-        .delete(`${BASE_URL}/reviews/${id}`)
-        .then(res => {
-            console.log("REVIEW deleted", res);
-            dispatch({ type: DELETE_REVIEW_SUCCESS, payload: res.data })
-        })
-        .catch(error => {
-            console.log(" axios request error", error);
-            dispatch({ type: DELETE_REVIEW_FAILURE, payload: error.res })
-        })
-    }
+export const deleteReview = (id) => {
+	return dispatch => {
+		dispatch({ type: DELETE_REVIEW_START });
+		axios
+			.delete(`${BASE_URL}/reviews/${id}`)
+			.then(res => {
+				console.log("REVIEW deleted", res);
+				dispatch({ type: DELETE_REVIEW_SUCCESS, payload: res.data })
+			})
+			.catch(error => {
+				console.log(" axios request error", error);
+				dispatch({ type: DELETE_REVIEW_FAILURE, payload: error.res })
+			})
+	}
 }
