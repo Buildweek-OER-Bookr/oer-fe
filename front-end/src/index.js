@@ -13,9 +13,13 @@ import { reducer } from './reducer';
 const store = createStore(reducer, applyMiddleware(thunk));
 
 const theme = {
+	preload: {
+		//bootstrap: 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css',
+		semanticui: 'https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css',
+	},
 	fonts: {
 		josefin: "'Josefin Sans', 'Lato', sans-serif",
-		lato: "'Lato', 'Josefin Sans' sans-serif",
+		lato: "'Lato', 'Josefin Sans', sans-serif",
 	},
 	gray: 'rgba(85, 91, 110, 1)',
 	darkblue: 'rgba(0, 63, 145, 1)',
