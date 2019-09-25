@@ -49,6 +49,7 @@ const StyledDetails = styled.div`
 		}
 	}
 	.review {
+		position: relative;
 		color: ${props => props.theme.black};
 		background-color: ${props => props.theme.white};
 		border: 1px solid transparent;
@@ -80,6 +81,19 @@ const StyledDetails = styled.div`
 		}
 		&:hover {
 			border: 1px solid ${props => props.theme.blue};
+			.delete-btn {
+				color: ${props => props.theme.white};
+				background-color: ${props => props.theme.darkblue};
+			}
+		}
+		.delete-btn {
+			span {
+				color: ${props => props.theme.white};
+			}
+			&:hover {
+				color: ${props => props.theme.white};
+				background-color: ${props => props.theme.darkblue};
+			}
 		}
 	}
 	.stars {
@@ -87,14 +101,21 @@ const StyledDetails = styled.div`
 	}
 	.book-info {
 		display: flex;
+		flex-wrap: wrap;
 		margin-bottom: 20px;
-		h4 {
-			max-width: 25%;
-			flex-basis: 25%;
+		h4, p, div {
+			max-width: 100%;
+			flex-basis: 100%;
 		}
-		p, div {
-			max-width: 75%;
-			flex-basis: 75%;
+		@media screen and (min-width: 360px) {
+			h4 {
+				max-width: 25%;
+				flex-basis: 25%;
+			}
+			p, div {
+				max-width: 75%;
+				flex-basis: 75%;
+			}
 		}
 	}
 	.controllers {
@@ -228,6 +249,10 @@ const Book = (props) => {
 								<blockquote>
 									{review.review}
 								</blockquote>
+								<div className="delete-btn">
+									<i className="icon-trash-empty"></i>
+									<span>Delete review</span>
+								</div>
 							</div>)
 						) : null
 					}

@@ -4,7 +4,10 @@ export default createGlobalStyle`
 	@import url(${props => props.theme.preload.semanticui});
 	@import url('https://fonts.googleapis.com/css?family=Josefin+Sans:300,400|Lato:300,400&display=swap');
 	:root {
-		font-size: 80%;
+		font-size: 70%;
+		@media screen and (min-width: 480px) {
+			font-size: 80%;
+		}
 		@media screen and (min-width: 720px) {
 			font-size: 100%;
 		}
@@ -145,6 +148,37 @@ export default createGlobalStyle`
 			&:last-child:nth-child(6n + 1) {
 				grid-column: span 3;
 				grid-row: span 1;
+			}
+		}
+	}
+	.delete-btn {
+		position: absolute;
+		bottom: 20px;
+		right: 20px;
+		padding: 15px 12px;
+		color: ${props => props.theme.white};
+		background-color: ${props => props.theme.blue};
+		transition: all .33s ease-in-out;
+		i, span {
+			display: inline-block;
+			vertical-align: middle;
+		}
+		span {
+			color: ${props => props.theme.blue};
+			white-space: nowrap;
+			max-width: 0;
+			max-height: 0;
+			overflow: hidden;
+			transition: max-width .8s cubic-bezier(0, 1, 0, 1) -.1s, max-height .8s cubic-bezier(0, 1, 0, 1) -.1s;
+		}
+		&:hover {
+			color: ${props => props.theme.darkblue};
+			background-color: ${props => props.theme.white};
+			span {
+				color: ${props => props.theme.darkblue};
+				max-width: 9999px;
+				max-height: 9999px;
+				transition: max-width .8s cubic-bezier(.5, 0, 1, 0) 0s, max-height .8s cubic-bezier(.5, 0, 1, 0) 0s;
 			}
 		}
 	}

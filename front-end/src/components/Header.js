@@ -46,14 +46,18 @@ const StyledHeader = styled.header`
 			flex-flow: column nowrap;
 		}
 		a {
-			font-size: 1.25rem;
+			font-size: 1rem;
 			line-height: 72px;
 			white-space: nowrap;
-			padding: 8px 20px 0;
+			padding: 8px 10px 0;
 			color: ${props => props.theme.blue};
 			&.active {
 				color: ${props => props.theme.white};
 				background-color: ${props => props.theme.blue};
+			}
+			@media screen and (min-width: 480px) {
+				font-size: 1.25rem;
+				padding: 8px 20px 0;
 			}
 			@media screen and (min-width: 1024px) and (min-height: 600px) {
 				width: 100%;
