@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import logo from '../images/logo.png';
 
 import { connect } from 'react-redux';
-import { getData } from './../actions/index';
 const StyledHeader = styled.header`
 	position: fixed;
 	z-index: 11;
