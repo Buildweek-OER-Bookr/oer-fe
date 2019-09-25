@@ -36,7 +36,8 @@ const App = (props) => {
 		<StyledApp>
 			<Header />
 			<main>
-				<Route path="/login" component={Login} />
+				<Route exact path="/" component={Login} />
+				<Route exact path="/login" component={Login} />
 				<Route path="/signup" component={Registration} />
 				<PrivateRoute exact path="/dashboard" component={Dashboard} />
 				<PrivateRoute exact path="/books" component={BookList} />
