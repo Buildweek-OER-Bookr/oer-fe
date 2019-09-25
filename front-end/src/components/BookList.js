@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getData } from './../actions/index';
 
 const StyledBooks = styled.div`
 	h4 {
@@ -15,8 +14,8 @@ const StyledBooks = styled.div`
 		border: 1px solid ${props => props.theme.blue};
 		background-color: ${props => props.theme.white};
 		p {
-			font-size: 1.25rem;
-			line-height: 1.7rem;
+			font-size: 1rem;
+			line-height: 1.25rem;
 		}
 		h4, p {
 			transition: all .33s ease-in-out;
@@ -31,22 +30,31 @@ const StyledBooks = styled.div`
 `;
 
 const BookList = (props) => {
-	console.log(props)	
-	const { dispatch, books } = props;
-	useEffect(() => {
-		if(books.length === 0) {
-			getData()(dispatch);
-		}
-		return () => { };
-	}, []);
+	const { books, search } = props;
+	const searchedBooks = search ? books.filter(book => {
+		let authors = false;
+		book.authors.forEach(author => {
+			if(!authors) authors = author.name.includes(search)
+		});
+		return book.title.includes(search) || book.publisher.includes(search) || authors
+	}) : books;
 	return (
 		<StyledBooks className="content noborder">
 			<h1>Book List</h1>
 			<div className="grid books">
 				{
-					books.map(book => <Link key={book.id} to={`/books/${book.id}`} className="grid-item book">
+					searchedBooks.map(book => <Link key={book.id} to={`/books/${book.id}`} className="grid-item book">
 						<h4>{book.title}</h4>
-						<p>{book.desc}</p>
+						<p>Written by {
+							book.authors.map((author, i) => (
+									<span key={author.id}>
+										{author.name}{i !== book.authors.length - 1 ? ', ' : null}
+									</span>
+								)
+							)
+						}</p>
+						<p>Published by {book.publisher}</p>
+						{book.license ? <p>License {book.license}</p> : <p>No license</p>}
 					</Link>)
 				}
 			</div>
@@ -54,5 +62,5 @@ const BookList = (props) => {
 	)
 };
 
-const mapStateToProps = state => ({ books: state.books });
+const mapStateToProps = state => ({ books: state.books, search: state.search });
 export default connect(mapStateToProps)(BookList);
