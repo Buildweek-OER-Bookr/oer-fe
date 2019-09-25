@@ -57,6 +57,7 @@ const initialState = {
 	},
 	books: [],
 	reviews: [],
+	search: "",
 	error: ""
 };
 
