@@ -106,7 +106,18 @@ export const deleteData = (id, history) => {
 	}
 }
 
-
+// export const getOneBook = id => dispatch => {
+// 	axios
+// 	  .get(`${BASE_URL}/books/${id}`)
+// 	  .then(res => {
+// 		dispatch({
+// 		  type: FETCH_BOOK_BY_ID,
+// 		  payload: res.data.book[0],
+// 		  reviews: res.data.reviews
+// 		});
+// 	  })
+// 	  .catch(err => console.log(err));
+//   };
 
 export const addReview = (newReview) => {
 	return dispatch => {
@@ -129,6 +140,15 @@ export const getReview = () => {
 		axios
 			.get(`${BASE_URL}/review`)
 			.then(res => {
+				// axios
+			// 	.get(`${BASE_URL}/books/${id}`)
+			// 		.then(res => {
+			// 		  dispatch({
+			// 			type: FETCH_BOOK_BY_ID,
+			// 			payload: res.data.book[0],
+			// 			reviews: res.data.reviews
+			// 		  });
+			// 		})
 				dispatch({ type: FETCH_REVIEW_SUCCESS, payload: res.data });
 			})
 			.catch(err => {
@@ -144,7 +164,16 @@ export const deleteReview = (id) => {
 		axios
 			.delete(`${BASE_URL}/reviews/${id}`)
 			.then(res => {
-				console.log("REVIEW deleted", res);
+			// axios
+			// 	.get(`${BASE_URL}/books/${id}`)
+			// 		.then(res => {
+			// 		  dispatch({
+			// 			type: FETCH_BOOK_BY_ID,
+			// 			payload: res.data.book[0],
+			// 			reviews: res.data.reviews
+			// 		  });
+			// 		})	
+					console.log("REVIEW deleted", res);
 				dispatch({ type: DELETE_REVIEW_SUCCESS, payload: res.data })
 			})
 			.catch(error => {
@@ -152,4 +181,6 @@ export const deleteReview = (id) => {
 				dispatch({ type: DELETE_REVIEW_FAILURE, payload: error.res })
 			})
 	}
-}
+} 
+
+					

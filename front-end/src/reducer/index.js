@@ -57,8 +57,10 @@ const initialState = {
 	},
 	books: [],
 	reviews: [],
+	review: "",
 	search: "",
-	error: ""
+	error: "",
+	book_id:null
 };
 
 export const reducer = (state = initialState, action) => {
@@ -136,7 +138,6 @@ export const reducer = (state = initialState, action) => {
 				error: ""
 			};
 		case DELETE_REVIEW_SUCCESS:
-				console.log("...state", state);
 			return {
 				...state,
 				// review: [...state.review, action.payload],

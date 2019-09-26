@@ -10,21 +10,28 @@ import 'semantic-ui-css/semantic.min.css';
 
 
 export default class DeleteBookModal extends Component {
-  constructor(props, id){
+  constructor(props, deleteData){
     super(props);
     this.state = { modalOpen: false };
      console.log(props, "props");
+    //  id: null
   };
  
 
   handleOpen = () => this.setState({ modalOpen: true });
 
   handleClose = () => this.setState({ modalOpen: false });
+  
+  deleteBook = (id, e) => {
+  handleSubmit = (e, id) => {
+    e.preventDefault();
+    deleteData( id);
+}
 
-  // deleteBook = e => {
+  // deleteBook = (e, id) => {
   //   e.preventDefault();
   //   axios
-  //   .delete(`https://oer-bookr.herokuapp.com/api/books/${this.props.id}`)
+  //   .delete(`https://oer-bookr.herokuapp.com/api/books/${id}`)
   //   .then(response => {
   //       console.log(response)
   //       this.props.history.push('/books');
@@ -36,7 +43,7 @@ export default class DeleteBookModal extends Component {
         trigger={<button onClick={this.handleOpen}>Delete</button>}
         open={this.state.modalOpen}
         onClose={this.handleClose}
-        basic
+        
         size="small"
       >
         <Header icon="browser" content="Confirm to Delete " />
@@ -47,7 +54,7 @@ export default class DeleteBookModal extends Component {
           <Button  color="red" onClick={this.handleClose} inverted>
             <Icon name="remove" /> No
           </Button>
-          <Button onClick={(e) => this.deleteBook(e)} color="green" inverted>
+          <Button onClick={(e) => this.deleteBook(e, this.props.book.id)} color="green" inverted>
             <Icon name="checkmark" /> Yes
           </Button>
         </Modal.Actions>
