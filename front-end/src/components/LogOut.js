@@ -10,4 +10,4 @@ const LogOut = ({ dispatch }) => {
     return <Redirect to="/login" />;
 }
 
-export default connect()(LogOut);
+export default connect((state) => ({ ...state }))(LogOut);

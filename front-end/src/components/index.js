@@ -6,10 +6,7 @@ import BookList from './BookList';
 import Book from './Book';
 import Modal from './Modal';
 import LogOut from './LogOut';
-
-//import BookCard from './BookCard';
-//import BookSinglePage from './BookSinglePage';
-
+import PrivateRoute from './PrivateRoute';
 export { 
 	Header, 
 	Login, 
@@ -19,6 +16,5 @@ export {
 	Book,
 	Modal,
 	LogOut,
-	//BookCard,
-	//BookSinglePage
+	PrivateRoute
 };

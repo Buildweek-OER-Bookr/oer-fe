@@ -1,7 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { addReview, deleteReview, getData } from "../actions"
 
 const StyledModal = styled.div`
 	position: fixed;
@@ -58,7 +56,7 @@ const StyledModal = styled.div`
 
 
 const Modal = (props) => {
-	const { visible, onClose, onSubmit, type, data, dispatch } = props;
+	const { visible, onClose, onSubmit, type, data } = props;
 
 	return (
 		<StyledModal className={`popup_${type} ${Number(visible) !== 0 ? 'show' : ''}`}>
@@ -70,22 +68,24 @@ const Modal = (props) => {
 				{
 					type === 'reviewForm' ? <>
 						<h4>Reviewing {data.title}</h4>
-						<form onSubmit={onSubmit}>
+						<form onSubmit={onSubmit} method="POST">
 							<textarea
 								id="review"
 								name="review"
 							/>
+							<label htmlFor="stars">Rating: (1-5 stars)</label>
+							<input id="stars" name="stars" type="number" min="1" max="5" />
 							<button type="submit">Submit</button>
 						</form>
 					</> : (type === 'deleteReview' ? <>
 						<h4 className="deleting">Are you sure you want to delete this review?</h4>
-						<form onSubmit={onSubmit}>
+						<form onSubmit={onSubmit} method="POST">
 							<button type="submit">Yes</button>
 							<button onClick={onClose}>Cancel</button>
 						</form>
 					</> : (type === 'deleteBook' ? <>
 						<h4 className="deleting">Are you sure you want to delete this book?</h4>
-						<form onSubmit= {onSubmit}>
+						<form onSubmit= {onSubmit} method="POST">
 							<button type="submit">Yes</button>
 							<button onClick={onClose}>Cancel</button>
 						</form>
@@ -96,5 +96,4 @@ const Modal = (props) => {
 	)
 };
 
-const mapStateToProps = state => ({ ...state })
-export default connect(mapStateToProps)(Modal);
+export default Modal;
