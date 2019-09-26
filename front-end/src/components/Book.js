@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import DeleteBookModal from "./DeleteBook"
+import Modal from './Modal';
+// import DeleteBookModal from "./DeleteBook"
+
+
 const StyledDetails = styled.div`
 	.book {
 		display: flex;
@@ -49,37 +52,62 @@ const StyledDetails = styled.div`
 		}
 	}
 	.review {
+		position: relative;
 		color: ${props => props.theme.black};
 		background-color: ${props => props.theme.white};
 		border: 1px solid transparent;
 		transition: all .33s ease-in-out;
-		padding: 30px 0;
 		blockquote {
 			position: relative;
-			padding: 30px 50px;
+			padding: 60px 50px;
 			font-size: 1.75rem;
 			line-height: 2.25rem;
 			text-align: center;
 			&:before, &:after {
 				position: absolute;
 				font-size: 5rem;
-				line-height: 0rem;
+				line-height: 5rem;
 				font-family: ${props => props.theme.fonts.lato};
 				color: ${props => props.theme.darkblue};
 			}
 			&:before {
 				content: "“";
-				top: 20px;
+				top: 1rem;
 				left: 20px;
 			}
 			&:after {
 				content: "”";
-				bottom: 0px;
+				bottom: -2rem;
 				right: 20px;
+			}
+		}
+		.delete-btn {
+			top: 0;
+			right: 0;
+			bottom: auto;
+			span {
+				color: ${props => props.theme.white};
+			}
+			&:hover {
+				color: ${props => props.theme.white};
+				background-color: ${props => props.theme.darkblue};
+			}
+		}
+		.review-author {
+			position: absolute;
+			bottom: 1.25rem;
+			right: 70px;
+			color: ${props => props.theme.blue};
+			span {
+				color: ${props => props.theme.darkblue};
 			}
 		}
 		&:hover {
 			border: 1px solid ${props => props.theme.blue};
+			.delete-btn {
+				color: ${props => props.theme.white};
+				background-color: ${props => props.theme.darkblue};
+			}
 		}
 	}
 	.stars {
@@ -87,43 +115,25 @@ const StyledDetails = styled.div`
 	}
 	.book-info {
 		display: flex;
+		flex-wrap: wrap;
 		margin-bottom: 20px;
-		h4 {
-			max-width: 25%;
-			flex-basis: 25%;
+		h4, p, div {
+			max-width: 100%;
+			flex-basis: 100%;
 		}
-		p, div {
-			max-width: 75%;
-			flex-basis: 75%;
+		@media screen and (min-width: 360px) {
+			h4 {
+				max-width: 25%;
+				flex-basis: 25%;
+			}
+			p, div {
+				max-width: 75%;
+				flex-basis: 75%;
+			}
 		}
 	}
 	.controllers {
 		display: flex;
-		padding-bottom: 30px;
-	}
-	button {
-		appearance: none;
-		padding: .05em 20px 0 15px;
-		margin-right: 15px;
-		border: 1px solid ${props => props.theme.blue};
-		background-color: ${props => props.theme.white};
-		font-family: ${props => props.theme.fonts.lato};
-		color: ${props => props.theme.blue};
-		font-size: 1.25rem;
-		line-height: 3rem;
-		transition: all .33s ease-in-out;
-		a {
-			color: ${props => props.theme.blue};
-			transition: all .33s ease-in-out;
-		}
-		&:hover {
-			color: ${props => props.theme.white};
-			background-color: ${props => props.theme.blue};
-			a {
-				color: ${props => props.theme.white};
-			}
-		}
-		
 	}
 `;
 
@@ -142,6 +152,24 @@ const Book = (props) => {
 			</div>
 		);
 	}
+	const [reviewModal, setReviewModal] = useState(false);
+	const toggleAddReviewModal = (e) => {
+		e.preventDefault();
+		setReviewModal(!reviewModal);
+	}
+
+	const [deleteReviewModal, setDeleteReviewModal] = useState(false);
+	const toggleDeleteReviewModal = (e) => {
+		e.preventDefault();
+		setDeleteReviewModal(!deleteReviewModal);
+	}
+
+	const [deleteBookModal, setDeleteBookModal] = useState(false);
+	const toggleDeleteBookModal = (e) => {
+		e.preventDefault();
+		setDeleteBookModal(!deleteBookModal);
+	}
+
 	const ratingToStars = rating => {
 		let stars = [];
 		let currRating = rating;
@@ -215,11 +243,14 @@ const Book = (props) => {
 									<i className="icon-download"></i> Access Link
 								</a>
 							</button>
-							{book.reviews.length === 0 ? <button><i className="icon-plus"></i> Add Review</button> : null}
-							{/* <button><i className="icon-trash-empty"></i> Remove</button> */}
-							 <DeleteBookModal 
+							{/* <button><i className="icon-trash-empty"></i> Remove</button>
+							<DeleteBookModal 
 							 id={book.id} history={props.history}
-							 />
+							 /> */}
+							{book.reviews.length === 0 ? <button onClick={toggleAddReviewModal}>
+								<i className="icon-plus"></i> Add Review
+							</button> : null}
+							<button onClick={toggleDeleteBookModal}><i className="icon-trash-empty"></i> Remove</button>
 						</div>
 					</div>
 				</div>
@@ -227,7 +258,7 @@ const Book = (props) => {
 			{book.reviews.length > 0 ? <div className="content reviews noborder">
 				<h2>
 					Reviews
-					<button><i className="icon-plus"></i> Add Review</button>
+					<button onClick={toggleAddReviewModal}><i className="icon-plus"></i> Add Review</button>
 				</h2>
 				<div className="grid">
 					{
@@ -236,11 +267,34 @@ const Book = (props) => {
 								<blockquote>
 									{review.review}
 								</blockquote>
+								<div className="review-author">review by <span>{review.user}</span></div>
+								<div className="delete-btn" onClick={toggleDeleteReviewModal}>
+									<i className="icon-trash-empty"></i>
+									<span>Delete review</span>
+								</div>
 							</div>)
 						) : null
 					}
 				</div>
 			</div> : null}
+			<Modal 
+				visible={reviewModal} 
+				onClose={toggleAddReviewModal}
+				type="reviewForm" 
+				data={book}
+			/>
+			<Modal 
+				visible={deleteReviewModal} 
+				onClose={toggleDeleteReviewModal}
+				type="deleteReview" 
+				data={book}
+			/>
+			<Modal 
+				visible={deleteBookModal} 
+				onClose={toggleDeleteBookModal}
+				type="deleteBook" 
+				data={book}
+			/>
 		</StyledDetails>
 	)
 };

@@ -8,11 +8,16 @@ const StyledBooks = styled.div`
 		padding-bottom: 15px;
 	}
 	.book {
+		position: relative;
 		padding: 30px;
 		transition: all .33s ease-in-out;
 		color: ${props => props.theme.black};
 		border: 1px solid ${props => props.theme.blue};
 		background-color: ${props => props.theme.white};
+		.delete-btn {
+			bottom: 20px;
+			right: 20px;
+		}
 		p {
 			font-size: 1.2rem;
 			line-height: 1.5rem;
@@ -32,6 +37,10 @@ const StyledBooks = styled.div`
 			background-color: ${props => props.theme.blue};
 			h4, p {
 				color: ${props => props.theme.white};
+			}
+			.delete-btn {
+				color: ${props => props.theme.darkblue};
+				background-color: ${props => props.theme.white};
 			}
 		}
 	}
@@ -64,6 +73,10 @@ const BookList = (props) => {
 								)
 							}</p>
 							<p>Published by {book.publisher}</p>
+						</div>
+						<div className="delete-btn" onClick={e => e.preventDefault()}>
+							<i className="icon-trash-empty"></i>
+							<span>Delete book</span>
 						</div>
 					</Link>)
 				}

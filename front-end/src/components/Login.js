@@ -1,13 +1,7 @@
-
-// import React, { Component } from 'react';
-import { Redirect, Link } from 'react-router-dom';
-// import { Form, Input, Button } from 'antd';
-import axiosWithAuth from "../axiosWithAuth";
-
-
-
 import React, { useState } from "react";
-
+import axiosWithAuth from "../axiosWithAuth";
+import SignUp from "./SignUp";
+// import { Redirect, Link } from 'react-router-dom';
 
 const Login = ({ history }) => {
 
@@ -34,29 +28,36 @@ const Login = ({ history }) => {
 
 	};
 	return (
-		<>
-			<h1>Welcome </h1>
-
-			<form onSubmit={handleSubmit}>
-				<input
-					type="text"
-					value={credentials.username}
-					//  id="username" 
-					name="username"
-					placeholder="Username"
-					onChange={handleChange}
-				/>
-				<input
-					type="password"
-					value={credentials.password}
-					// id="password" 
-					name="password"
-					placeholder="Password"
-					onChange={handleChange}
-				/>
-				<button type="submit">Login</button>
-			</form>
-		</>
+		<div className="login-flex">
+			<div id="login" className="content">
+				<h1>Login</h1>
+				<form onSubmit={handleSubmit}>
+					<label htmlFor="username">Username:</label>
+					<input
+						type="text"
+						value={credentials.username}
+						id="username" 
+						name="username"
+						placeholder="Username"
+						onChange={handleChange}
+						autoComplete="username"
+					/>
+					<label htmlFor="password">Password:</label>
+					<input
+						type="password"
+						value={credentials.password}
+						id="password" 
+						name="password"
+						placeholder="Password"
+						onChange={handleChange}
+						autoComplete="current-password"
+					/>
+					<button type="submit">Login</button>
+					<a href="#signup">Don't have an account? Sign up here!</a>
+				</form>
+			</div>
+			<SignUp />
+		</div>
 	);
 };
 

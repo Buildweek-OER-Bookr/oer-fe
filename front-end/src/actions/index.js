@@ -186,7 +186,6 @@ export const deleteReview = (id) => {
 				console.log(" axios request error", error);
 				dispatch({ type: DELETE_REVIEW_FAILURE, payload: error.res })
 			})
-			
 	}
 } 
 
