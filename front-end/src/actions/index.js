@@ -30,6 +30,7 @@ export const ADD_REVIEW_FAILURE = "ADD_REVIEW_FAILURE";
 export const DELETE_REVIEW_START = "DELETE_REVIEW_START";
 export const DELETE_REVIEW_SUCCESS = "DELETE_REVIEW_SUCCESS";
 export const DELETE_REVIEW_FAILURE = "DELETE_REVIEW_FAILURE";
+export const SEARCH_INPUT_CHANGE = "SEARCH_INPUT";	
 
 
 // export const login = ( history, credentials ) => {
@@ -118,6 +119,11 @@ export const deleteData = (id, history) => {
 // 	  })
 // 	  .catch(err => console.log(err));
 //   };
+export const search = input => {	
+	return dispatch => {	
+	dispatch({ type: SEARCH_INPUT_CHANGE, payload: input });	
+  }	
+}
 
 export const addReview = (newReview) => {
 	return dispatch => {
@@ -180,7 +186,8 @@ export const deleteReview = (id) => {
 				console.log(" axios request error", error);
 				dispatch({ type: DELETE_REVIEW_FAILURE, payload: error.res })
 			})
+			
 	}
 } 
 
-					
+				

@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { Route } from 'react-router-dom';
 import { Header, Login, Registration, Dashboard, BookList, Book } from './components';
-
 import PrivateRoute from "./components/PrivateRoute";
 
 import { connect } from 'react-redux';

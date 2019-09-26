@@ -21,7 +21,8 @@ import {
 	DELETE_REVIEW_FAILURE,
 	ADD_REVIEW_START,
 	ADD_REVIEW_SUCCESS,
-	ADD_REVIEW_FAILURE
+	ADD_REVIEW_FAILURE,
+	SEARCH_INPUT_CHANGE
 } from "../actions";
 
 const initialState = {
@@ -148,7 +149,11 @@ export const reducer = (state = initialState, action) => {
 				...state,
 				error: action.payload
 			};
-
+			case SEARCH_INPUT_CHANGE:
+					return {
+						searchInput: action.payload
+					};
+			
 		default:
 			return state;
 	}
