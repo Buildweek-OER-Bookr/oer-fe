@@ -5,6 +5,8 @@ import Dashboard from './Dashboard';
 import BookList from './BookList';
 import Book from './Book';
 import Modal from './Modal';
+import LogOut from './LogOut';
+
 //import BookCard from './BookCard';
 //import BookSinglePage from './BookSinglePage';
 
@@ -16,6 +18,7 @@ export {
 	BookList, 
 	Book,
 	Modal,
+	LogOut,
 	//BookCard,
 	//BookSinglePage
 };

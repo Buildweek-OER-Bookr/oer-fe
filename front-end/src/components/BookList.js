@@ -77,10 +77,10 @@ const BookList = (props) => {
 							}</p>
 							<p>Published by {book.publisher}</p>
 						</div>
-						<div className="delete-btn" onClick={e => e.preventDefault()}>
+						{/* <div className="delete-btn" onClick={e => e.preventDefault()}>
 							<i className="icon-trash-empty"></i>
 							<span>Delete book</span>
-						</div>
+						</div> */}
 					</Link>)
 				}
 			</div>

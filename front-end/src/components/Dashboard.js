@@ -1,13 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import BookList from "./BookList";
 import { connect } from 'react-redux';
-import {search} from "../actions"
+import { search, getData} from "../actions"
 
 const Dashboard = (props) => {
 	const { dispatch } = props;
 	const onSearch = e => {
 		search(e.target.value)(dispatch);
 	}
+	useEffect(() => {
+		if(localStorage.getItem("user_id") > 0)  {
+			getData(localStorage.getItem("user_id"))(dispatch);
+		}
+		return () => { };
+	}, []);
 	return (
 		<>
 			<div className="content">

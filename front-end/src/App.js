@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { Route } from 'react-router-dom';
-import { Header, Login, Dashboard, BookList, Book } from './components';
+import { Header, Login, Dashboard, BookList, Book, LogOut } from './components';
 
 import PrivateRoute from "./components/PrivateRoute";
 
@@ -25,13 +25,7 @@ const StyledApp = styled.div`
 `;
 
 const App = (props) => {
-	const { dispatch, books } = props;
-	useEffect(() => {
-		if(books.length === 0) {
-			getData(localStorage.getItem("user_id"))(dispatch);
-		}
-		return () => { };
-	}, []);
+	const { books } = props;
 	return (
 		<StyledApp>
 			<Header />
@@ -41,6 +35,7 @@ const App = (props) => {
 				<PrivateRoute exact path="/dashboard" component={Dashboard} />
 				<PrivateRoute exact path="/books" component={BookList} />
 				<PrivateRoute exact path="/books/:bookid" component={Book} />
+				<Route  path="/logout" component={LogOut} />
 			</main>
 		</StyledApp>
 	);

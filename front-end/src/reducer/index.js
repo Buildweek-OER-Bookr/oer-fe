@@ -6,7 +6,7 @@ import {
 	// REGISTER__START,
 	// REGISTER__SUCCESS,
 	// REGISTER__FAILURE,
-
+	UPDATE_HEADER_LOGIN,
 	FETCH_BOOKS_START,
 	FETCH_BOOKS_SUCCESS,
 	FETCH_BOOKS_FAILURE,
@@ -37,8 +37,8 @@ const initialState = {
 				url: '/books',
 			},
 			{
-				name: 'Logout',
-				url: '/logout',
+				name: (localStorage.getItem("user_id") > 0 ? 'Logout' : 'Login'),
+				url: (localStorage.getItem("user_id") > 0 ? '/logout' : '/login'),
 			}
 		],
 		contacts: [
@@ -66,6 +66,17 @@ const initialState = {
 
 export const reducer = (state = initialState, action) => {
 	switch (action.type) {
+		case UPDATE_HEADER_LOGIN:
+			const newState = {
+				...state,
+				error: ""
+			};
+
+			newState.header.menu[2].name = (localStorage.getItem("user_id") > 0 ? 'Logout' : 'Login');
+			newState.header.menu[2].url = (localStorage.getItem("user_id") > 0 ? '/logout' : '/login');
+			
+			console.log('updateHeader', newState)
+			return newState;
 		case FETCH_BOOKS_START:
 			return {
 				...state,

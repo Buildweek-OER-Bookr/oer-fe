@@ -11,6 +11,8 @@ const BASE_URL = "https://oer-bookr.herokuapp.com/api";
 // export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 // export const REGISTER_FAILURE = "REGISTER_FAILURE";
 
+export const UPDATE_HEADER_LOGIN = "UPDATE_HEADER_LOGIN";
+
 export const FETCH_BOOKS_START = "FETCH_BOOKS_START";
 export const FETCH_BOOKS_SUCCESS = "FETCH_BOOKS_SUCCESS";
 export const FETCH_BOOKS_FAILURE = "FETCH_BOOKS_FAILURE";
@@ -62,7 +64,11 @@ export const SEARCH_INPUT_CHANGE = "SEARCH_INPUT";
 //     .catch(err => console.log("login error ", err));
 
 // };
-
+export const updateHeader = () => {
+	return dispatch => {
+		dispatch({ type: UPDATE_HEADER_LOGIN })
+	}
+}
 
 export const getData = (id) => {
 	return dispatch => {

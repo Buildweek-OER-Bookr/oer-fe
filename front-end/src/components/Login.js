@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
 import SignUp from "./SignUp";
+import { updateHeader } from '../actions';
+import { connect } from 'react-redux';
 // import { Redirect, Link } from 'react-router-dom';
 
-const Login = ({ history }) => {
+const Login = ({ history, dispatch }) => {
 
 	const [credentials, setCredentials] = useState({
 		username: "",
@@ -22,6 +24,7 @@ const Login = ({ history }) => {
 			.then(res => {
 				localStorage.setItem("token", res.data.token);
 				localStorage.setItem("user_id", res.data.user_id);
+				updateHeader()(dispatch);
 				history.push("/dashboard");
 			})
 			.catch(err => console.log("login error ", err));
@@ -62,4 +65,4 @@ const Login = ({ history }) => {
 	);
 };
 
-export default Login;
+export default connect()(Login);
