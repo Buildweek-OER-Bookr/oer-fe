@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axiosWithAuth from "../axiosWithAuth";
+import axios from "axios";
 import SignUp from "./SignUp";
 // import { Redirect, Link } from 'react-router-dom';
 
@@ -17,10 +17,11 @@ const Login = ({ history }) => {
 	const handleSubmit = e => {
 		e.preventDefault();
 
-		axiosWithAuth()
-			.post(`auth/login`, credentials)
+		axios
+			.post(`https://oer-bookr.herokuapp.com/api/auth/login`, credentials)
 			.then(res => {
-				localStorage.setItem("token", res.data.payload);
+				localStorage.setItem("token", res.data.token);
+				localStorage.setItem("user_id", res.data.user_id);
 				history.push("/dashboard");
 			})
 			.catch(err => console.log("login error ", err));

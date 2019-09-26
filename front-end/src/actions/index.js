@@ -1,4 +1,4 @@
-import axios from "axios";
+import {axiosWithAuth} from "../axiosWithAuth";
 // import { Book } from "../components";
 
 const BASE_URL = "https://oer-bookr.herokuapp.com/api";
@@ -63,22 +63,12 @@ export const SEARCH_INPUT_CHANGE = "SEARCH_INPUT";
 
 // };
 
-const configRequest = (method, url, data, token) => {
-	return {
-		method: method,
-		url: url,
-		data: data,
-		headers: {
-			'Authorization': `${token}`,
-		},
-		json: true
-	}
-};
 
 export const getData = () => {
 	return dispatch => {
 		dispatch({ type: FETCH_BOOKS_START });
-		axios(configRequest('GET', `${BASE_URL}/books`, null, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNTY5NDMyMDU2LCJleHAiOjE1Njk1MTg0NTZ9.82ACdIrcBapQXtbuT9bPe7Xd5QVNmC6UQOxOw8vQUws'))
+		axiosWithAuth()
+		.get(`${BASE_URL}/books`)
 			.then(res => {
 				dispatch({ type: FETCH_BOOKS_SUCCESS, payload: res.data });
 			})
@@ -93,7 +83,7 @@ export const getData = () => {
 export const deleteData = (id, history) => {
 	return dispatch => {
 		dispatch({ type: DELETE_BOOKS_START });
-		axios
+		axiosWithAuth()
 			.delete(`${BASE_URL}/${id}`)
 			.then(res => {
 				console.log("book deleted", res);
@@ -128,12 +118,14 @@ export const search = input => {
 export const addReview = (newReview) => {
 	return dispatch => {
 		dispatch({ type: ADD_REVIEW_START });
-		axios
-			.post(`${BASE_URL}/review`, newReview)
+		axiosWithAuth()
+			.post(`${BASE_URL}/reviews`, newReview)
 			.then(res => {
+				console.log(newReview)
 				dispatch({ type: ADD_REVIEW_SUCCESS, payload: res.data });
 			})
 			.catch(err => {
+				console.log(err)
 				dispatch({ type: ADD_REVIEW_FAILURE, payload: err.res });
 			});
 	};
@@ -143,8 +135,8 @@ export const addReview = (newReview) => {
 export const getReview = () => {
 	return dispatch => {
 		dispatch({ type: FETCH_REVIEW_START });
-		axios
-			.get(`${BASE_URL}/review`)
+		axiosWithAuth()
+			.get(`${BASE_URL}/reviews`)
 			.then(res => {
 				// axios
 			// 	.get(`${BASE_URL}/books/${id}`)
@@ -167,7 +159,7 @@ export const getReview = () => {
 export const deleteReview = (id) => {
 	return dispatch => {
 		dispatch({ type: DELETE_REVIEW_START });
-		axios
+		axiosWithAuth()
 			.delete(`${BASE_URL}/reviews/${id}`)
 			.then(res => {
 			// axios

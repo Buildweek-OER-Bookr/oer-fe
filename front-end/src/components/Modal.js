@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
+import {addReview, deleteReview} from "../actions"
 
 const StyledModal = styled.div`
 	position: fixed;
@@ -55,18 +56,26 @@ const StyledModal = styled.div`
 	}
 `;
 
+
 const Modal = (props) => {
-	const { visible, onClose, type, data } = props;
+	const { visible, onClose, type, data, dispatch } = props;
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		addReview({review:"text", stars:1, reviewer_id:1 , book_id: 1 })(dispatch);
+
+	}
 	return (
 		<StyledModal className={`popup_${type} ${visible ? 'show' : ''}`}>
 			<div className="popup-content">
 				<div className="delete-btn" onClick={onClose}>
 					<i className="icon-cancel"></i>
+
 				</div>
 				{
 					type === 'reviewForm' ? <>
 						<h4>Reviewing {data.title}</h4>
-						<form>
+						<form onSubmit={handleSubmit}>
 							<textarea
 								id="review"
 								name="review"
