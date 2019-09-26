@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { Route } from 'react-router-dom';
-import { Header, Login, Registration, Dashboard, BookList, Book } from './components';
+import { Header, Login, Dashboard, BookList, Book } from './components';
 
 import PrivateRoute from "./components/PrivateRoute";
 
@@ -38,7 +38,6 @@ const App = (props) => {
 			<main>
 				<Route exact path="/" component={Login} />
 				<Route exact path="/login" component={Login} />
-				<Route path="/signup" component={Registration} />
 				<PrivateRoute exact path="/dashboard" component={Dashboard} />
 				<PrivateRoute exact path="/books" component={BookList} />
 				<PrivateRoute exact path="/books/:bookid" component={Book} />
