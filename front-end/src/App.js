@@ -1,29 +1,45 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { Route } from 'react-router-dom';
-import { Header, Login, SignUp, Dashboard, BookList, Book } from './components';
+import { Header, Login, Dashboard, BookList, Book, LogOut } from './components';
+
+import PrivateRoute from "./components/PrivateRoute";
+
+import { connect } from 'react-redux';
+import { getData } from './actions/index';
 
 const StyledApp = styled.div`
+	max-width: 2160px;
+	margin: 0 auto;
 	main {
 		position: relative;
-		margin-left: auto;
-		max-width: calc(100% - 250px);
+		margin-top: 80px;
+		max-height: calc(100vh - 80px);
+		@media screen and (min-width: 1024px) and (min-height: 600px) {
+			margin-top: 0;
+			max-height: 100%;
+			margin-left: auto;
+			max-width: calc(100% - 250px);
+		}
 	}
 `;
 
-const App = () => {
+const App = (props) => {
+	const { books } = props;
 	return (
 		<StyledApp>
 			<Header />
 			<main>
-				<Route path="/login" component={Login} />
-				<Route path="/signup" component={SignUp} />
-				<Route exact path="/dashboard" component={Dashboard} />
-				<Route exact path="/booklist" component={BookList} />
-				<Route path="/booklist/:bookid" component={Book} />
+				<Route exact path="/" component={Login} />
+				<Route exact path="/login" component={Login} />
+				<PrivateRoute exact path="/dashboard" component={Dashboard} />
+				<PrivateRoute exact path="/books" component={BookList} />
+				<PrivateRoute exact path="/books/:bookid" component={Book} />
+				<Route  path="/logout" component={LogOut} />
 			</main>
 		</StyledApp>
 	);
 };
 
-export default App;
+const mapStateToProps = state => ({ books: state.books })
+export default connect(mapStateToProps)(App);

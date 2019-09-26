@@ -1,23 +1,39 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Input } from 'antd';
-const { Search } = Input;
+import React, { useEffect } from 'react';
+import BookList from "./BookList";
+import { connect } from 'react-redux';
+import { search, getData} from "../actions"
 
 const Dashboard = (props) => {
-	//const { history, location, match } = props;
+	const { dispatch } = props;
+	const onSearch = e => {
+		search(e.target.value)(dispatch);
+	}
+	useEffect(() => {
+		if(localStorage.getItem("user_id") > 0)  {
+			getData(localStorage.getItem("user_id"))(dispatch);
+		}
+		return () => { };
+	}, []);
 	return (
-		<div className="container">
-			<h1>Dashboard</h1>
-			<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Itaque est deserunt nihil rerum illo ut, nesciunt repellendus. Aliquam possimus quae totam adipisci perspiciatis debitis tempora expedita voluptatum odio, sapiente id.</p>
+		<>
+			<div className="content">
+				<h1>Introduction</h1>
+				<p>OER Bookr is a teacher's source for open educational resources (OER). Picture the Yelp of textbooks, a social platform for peer reviewed, open licensed textbooks.</p>
 
-			<h2>Search by book title</h2>
-			<Search
-				enterButton
-				onSearch={search => console.log(search)}
-				placeholder="Search by book title"
-			/>
-		</div>
+				<h2>Search by book title, author, publisher or tag</h2>
+				<input
+					id="search"
+					name="search"
+					type="text"
+					value={props.search}
+					onChange={onSearch}
+					placeholder="Search by book title, author, publisher or tag"
+				/>
+			</div>
+			<BookList />
+		</>
 	)
 };
 
-export default Dashboard;
+const mapStateToProps = state => ({ search: state.search })
+export default connect(mapStateToProps)(Dashboard);

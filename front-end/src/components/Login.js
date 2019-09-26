@@ -1,29 +1,68 @@
-import React from 'react';
-import { Redirect, Link } from 'react-router-dom';
-import { Form, Input, Button } from 'antd';
+import React, { useState } from "react";
+import axios from "axios";
+import SignUp from "./SignUp";
+import { updateHeader } from '../actions';
+import { connect } from 'react-redux';
+// import { Redirect, Link } from 'react-router-dom';
 
-const Login = (props) => {
-	const { history, location, match } = props;
+const Login = ({ history, dispatch }) => {
 
-	const onSubmitLogin = (e) => {
+	const [credentials, setCredentials] = useState({
+		username: "",
+		password: ""
+	});
+
+	const handleChange = e => {
+		setCredentials({ ...credentials, [e.target.name]: e.target.value });
+	};
+
+	const handleSubmit = e => {
 		e.preventDefault();
-		console.log('prevent submit');
-		history.push('/dashboard');
-	}
+
+		axios
+			.post(`https://oer-bookr.herokuapp.com/api/auth/login`, credentials)
+			.then(res => {
+				localStorage.setItem("token", res.data.token);
+				localStorage.setItem("user_id", res.data.user_id);
+				updateHeader()(dispatch);
+				history.push("/dashboard");
+			})
+			.catch(err => console.log("login error ", err));
+		setCredentials({ username: '', password: '' })
+
+	};
 	return (
-		<div className="login">
-			<Form onSubmit={onSubmitLogin}>
-				<Form.Item label="Username">
-					<Input type="text" />
-				</Form.Item>
-				<Form.Item label="Password">
-					<Input type="text" />
-				</Form.Item>
-				<Button type="primary" htmlType="submit">Login</Button>
-				<Link to="/signup"><Button style={{ marginLeft: 8 }}>Sign up</Button></Link>
-			</Form>
+		<div className="login-flex">
+			<div id="login" className="content">
+				<h1>Login</h1>
+				<form onSubmit={handleSubmit}>
+					<label htmlFor="username">Username:</label>
+					<input
+						type="text"
+						value={credentials.username}
+						id="username" 
+						name="username"
+						placeholder="Username"
+						onChange={handleChange}
+						autoComplete="username"
+					/>
+					<label htmlFor="password">Password:</label>
+					<input
+						type="password"
+						value={credentials.password}
+						id="password" 
+						name="password"
+						placeholder="Password"
+						onChange={handleChange}
+						autoComplete="current-password"
+					/>
+					<button type="submit">Login</button>
+					<a href="#signup">Don't have an account? Sign up here!</a>
+				</form>
+			</div>
+			<SignUp />
 		</div>
-	)
+	);
 };
 
-export default Login;
+export default connect()(Login);

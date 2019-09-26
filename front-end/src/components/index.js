@@ -1,8 +1,24 @@
+import Header from './Header';
 import Login from './Login';
-import SignUp from './SignUp';
+import Registration from './SignUp';
 import Dashboard from './Dashboard';
 import BookList from './BookList';
 import Book from './Book';
-import Header from './Header';
+import Modal from './Modal';
+import LogOut from './LogOut';
 
-export { Header, Login, SignUp, Dashboard, BookList, Book };
+//import BookCard from './BookCard';
+//import BookSinglePage from './BookSinglePage';
+
+export { 
+	Header, 
+	Login, 
+	Registration, 
+	Dashboard, 
+	BookList, 
+	Book,
+	Modal,
+	LogOut,
+	//BookCard,
+	//BookSinglePage
+};
