@@ -26,64 +26,71 @@ import {
 } from "../actions";
 
 const initialState = {
-	header: {
-		menu: [
-			{
-				name: 'Home',
-				url: '/dashboard',
-			},
-			{
-				name: 'Book List',
-				url: '/books',
-			},
-			{
-				name: (localStorage.getItem("user_id") > 0 ? 'Logout' : 'Login'),
-				url: (localStorage.getItem("user_id") > 0 ? '/logout' : '/login'),
-			}
-		],
-		contacts: [
-			{
-				url: 'https://twitter.com/oerbookr',
-				type: 'twitter'
-			},
-			{
-				url: 'https://www.linkedin.com/in/oerbookr',
-				type: 'linkedin'
-			},
-			{
-				url: 'https://github.com/orgs/Buildweek-OER-Bookr/',
-				type: 'github'
-			},
-		]
-	},
+	menu: [
+		{
+			name: 'Home',
+			url: '/dashboard',
+		},
+		{
+			name: 'Book List',
+			url: '/books',
+		},
+		{
+			name: (localStorage.getItem("user_id") > 0 ? 'Logout' : 'Login'),
+			url: (localStorage.getItem("user_id") > 0 ? '/logout' : '/login'),
+		}
+	],
+	contacts: [
+		{
+			url: 'https://twitter.com/oerbookr',
+			type: 'twitter'
+		},
+		{
+			url: 'https://www.linkedin.com/in/oerbookr',
+			type: 'linkedin'
+		},
+		{
+			url: 'https://github.com/orgs/Buildweek-OER-Bookr/',
+			type: 'github'
+		},
+	],
 	books: [],
-	reviews: [],
-	review: "",
 	search: "",
 	error: "",
-	book_id:null
+	//reviews: [],
+	//review: "",
+	//book_id:null
 };
 
 export const reducer = (state = initialState, action) => {
 	switch (action.type) {
 		case UPDATE_HEADER_LOGIN:
-			const newState = {
+			//console.log('updateHeader');
+			return {
 				...state,
-				error: ""
+				menu: [
+					{
+						name: 'Home',
+						url: '/dashboard',
+					},
+					{
+						name: 'Book List',
+						url: '/books',
+					},
+					{
+						name: (localStorage.getItem("user_id") > 0 ? 'Logout' : 'Login'),
+						url: (localStorage.getItem("user_id") > 0 ? '/logout' : '/login'),
+					}
+				], 
+				error: "",
 			};
-
-			newState.header.menu[2].name = (localStorage.getItem("user_id") > 0 ? 'Logout' : 'Login');
-			newState.header.menu[2].url = (localStorage.getItem("user_id") > 0 ? '/logout' : '/login');
-			
-			console.log('updateHeader', newState)
-			return newState;
 		case FETCH_BOOKS_START:
 			return {
 				...state,
 				error: ""
 			};
 		case FETCH_BOOKS_SUCCESS:
-			console.log("action pay:  ", action.payload);
+			//console.log("action pay:  ", action.payload);
 			return {
 				...state,
 				books: [...action.payload],
@@ -116,7 +123,7 @@ export const reducer = (state = initialState, action) => {
 				error: ""
 			};
 		case FETCH_REVIEW_SUCCESS:
-			console.log("action pay:  ", action.payload);
+			//console.log("action pay:  ", action.payload);
 			return {
 				...state,
 				review: [...action.payload],

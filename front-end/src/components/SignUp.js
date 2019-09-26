@@ -1,95 +1,46 @@
-import React, { useState, useContext, useEffect } from "react";
-import axiosWithAuth from "../axiosWithAuth";
-import { Link } from 'react-router-dom';
-import { Form, Field, withFormik } from "formik";
-//import { Form as SemanticForm, Segment, Button, Grid, Header, Image, Message } from "semantic-ui-react";
-import * as yup from "yup";
-// import logo from '../images/logo.png';
+import React from "react";
 
-
-const Registration = ({ errors, touched, status, history }) => {
-	//   const authContext = useContext(AuthContext);
-	//   const { register, isAuthenticated, userInfo } = authContext;
-
-	//   useEffect(() => {
-	//     if (status) {
-	//       register(status);
-	//       history.push("/Dashboard");
-	//     }
-
-	//     if (isAuthenticated) {
-	//       if (userInfo && userInfo.userRoles.length > 1) {
-	//         history.push("/Dashboard");
-
-	//     }
-	//   }, [status]);
-
-	
-	const [credentials, setCredentials] = useState({
-		name: "",
-		username: "",
-		password: "",
-		password2: ""
-	});
-
-	const handleChange = e => {
-		setCredentials({ ...credentials, [e.target.name]: e.target.value });
-	};
-
-	const handleSubmit = e => {
-		e.preventDefault();
-
-		axiosWithAuth()
-			.post(`auth/register`, credentials)
-			.then(res => {
-				console.log(res);
-				//localStorage.setItem("token", res.data.payload);
-				//history.push("/dashboard");
-			})
-			.catch(err => console.log("register error", err));
-		setCredentials({ name: '', username: '', password: '', password2: '' })
-
-	};
+const Registration = ({ onSignUp, onChange, form, errors, touched, status, history }) => {
 	return (
 		<div id="signup" className="content">
 			<h1>Sign Up</h1>
-			<form onSubmit={handleSubmit}>
+			<form onSubmit={onSignUp}>
 				<label htmlFor="name">Name:</label>
 				<input
 					type="text"
-					value={credentials.name}
+					value={form.name}
 					id="name"
 					name="name"
 					placeholder="Name"
-					onChange={handleChange}
+					onChange={onChange}
 				/>
 				<label htmlFor="signup_username">Username:</label>
 				<input
 					type="text"
-					value={credentials.username}
+					value={form.username}
 					id="signup_username"
 					name="username"
 					placeholder="Username"
-					onChange={handleChange}
+					onChange={onChange}
 				/>
 				<label htmlFor="signup_password">Password:</label>
 				<input
 					type="password"
-					value={credentials.password}
+					value={form.password}
 					id="signup_password"
 					name="password"
 					placeholder="Password"
-					onChange={handleChange}
+					onChange={onChange}
 					autoComplete="new-password"
 				/>
 				<label htmlFor="password2">Confirm Password:</label>
 				<input
 					type="password"
-					value={credentials.password2}
+					value={form.password2}
 					id="password2"
-					name="password"
+					name="password2"
 					placeholder="Password"
-					onChange={handleChange}
+					onChange={onChange}
 					autoComplete="new-password"
 				/>
 				<button type="submit">Sign Up</button>

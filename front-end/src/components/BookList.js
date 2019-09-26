@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { getData } from "../actions"
 
 const StyledBooks = styled.div`
 	h4 {
@@ -47,7 +48,7 @@ const StyledBooks = styled.div`
 `;
 
 const BookList = (props) => {
-	const { books, search } = props;
+	const { books, search, dispatch } = props;
 	const searchedBooks = search ? books.filter(book => {
 		let byAuthors = false;
         book.authors.forEach(author => {
@@ -58,6 +59,12 @@ const BookList = (props) => {
         const byTag = book.tag ? book.tag.includes(search) : false;
         return byTitle || byPublisher || byAuthors || byTag;
 	}) : books;
+	useEffect(() => {
+		if(localStorage.getItem("user_id") > 0 && books.length === 0)  {
+			getData(localStorage.getItem("user_id"))(dispatch);
+		}
+		return () => { };
+	}, []);
 	return (
 		<StyledBooks className="content noborder">
 			<h1>Book List</h1>

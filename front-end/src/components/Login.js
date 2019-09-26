@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import SignUp from "./SignUp";
 import { updateHeader } from '../actions';
@@ -6,21 +6,31 @@ import { connect } from 'react-redux';
 // import { Redirect, Link } from 'react-router-dom';
 
 const Login = ({ history, dispatch }) => {
-
-	const [credentials, setCredentials] = useState({
+	const [loginForm, setLoginForm] = useState({
 		username: "",
-		password: ""
+		password: "",
+		fromSignUp: false
+	});
+	const [signupForm, setSignupForm] = useState({
+		name: "",
+		username: "",
+		password: "",
+		password2: ""
 	});
 
-	const handleChange = e => {
-		setCredentials({ ...credentials, [e.target.name]: e.target.value });
+	const handleLoginChange = e => {
+		setLoginForm({ ...loginForm, [e.target.name]: e.target.value });
+	};
+	const handleSignupChange = e => {
+		setSignupForm({ ...signupForm, [e.target.name]: e.target.value });
 	};
 
-	const handleSubmit = e => {
-		e.preventDefault();
-
+	const handleLogin = e => {
+		if (e !== null) {
+			e.preventDefault();
+		}
 		axios
-			.post(`https://oer-bookr.herokuapp.com/api/auth/login`, credentials)
+			.post(`https://oer-bookr.herokuapp.com/api/auth/login`, loginForm)
 			.then(res => {
 				localStorage.setItem("token", res.data.token);
 				localStorage.setItem("user_id", res.data.user_id);
@@ -28,41 +38,58 @@ const Login = ({ history, dispatch }) => {
 				history.push("/dashboard");
 			})
 			.catch(err => console.log("login error ", err));
-		setCredentials({ username: '', password: '' })
-
+		setSignupForm({ username: '', password: '', fromSignUp: false })
 	};
+
+	const handleSignUp = e => {
+		e.preventDefault();
+		const holdForm = signupForm;
+		axios
+			.post(`https://oer-bookr.herokuapp.com/api/auth/register`, signupForm)
+			.then(res => {
+				setLoginForm({ username: holdForm.username, password: holdForm.password, fromSignUp: true })
+			})
+			.catch(err => console.log("register error", err));
+		setSignupForm({ name: '', username: '', password: '', password2: '' })
+	};
+	useEffect(() => {
+		if(loginForm.fromSignUp) {
+			handleLogin(null)
+		}
+		return () => { };
+	}, [loginForm.fromSignUp])
 	return (
 		<div className="login-flex">
 			<div id="login" className="content">
 				<h1>Login</h1>
-				<form onSubmit={handleSubmit}>
+				<form onSubmit={handleLogin}>
 					<label htmlFor="username">Username:</label>
 					<input
 						type="text"
-						value={credentials.username}
-						id="username" 
+						value={loginForm.username}
+						id="username"
 						name="username"
 						placeholder="Username"
-						onChange={handleChange}
+						onChange={handleLoginChange}
 						autoComplete="username"
 					/>
 					<label htmlFor="password">Password:</label>
 					<input
 						type="password"
-						value={credentials.password}
-						id="password" 
+						value={loginForm.password}
+						id="password"
 						name="password"
 						placeholder="Password"
-						onChange={handleChange}
+						onChange={handleLoginChange}
 						autoComplete="current-password"
 					/>
 					<button type="submit">Login</button>
 					<a href="#signup">Don't have an account? Sign up here!</a>
 				</form>
 			</div>
-			<SignUp />
+			<SignUp onSignUp={handleSignUp} onChange={handleSignupChange} form={signupForm} />
 		</div>
 	);
 };
 
-export default connect()(Login);
+export default connect((state) => ({ ...state }))(Login);

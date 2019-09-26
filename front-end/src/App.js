@@ -1,12 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Route } from 'react-router-dom';
-import { Header, Login, Dashboard, BookList, Book, LogOut } from './components';
-
-import PrivateRoute from "./components/PrivateRoute";
-
-import { connect } from 'react-redux';
-import { getData } from './actions/index';
+import { Header, Login, Dashboard, BookList, Book, LogOut, PrivateRoute } from './components';
 
 const StyledApp = styled.div`
 	max-width: 2160px;
@@ -25,7 +20,6 @@ const StyledApp = styled.div`
 `;
 
 const App = (props) => {
-	const { books } = props;
 	return (
 		<StyledApp>
 			<Header />
@@ -41,5 +35,4 @@ const App = (props) => {
 	);
 };
 
-const mapStateToProps = state => ({ books: state.books })
-export default connect(mapStateToProps)(App);
+export default App;

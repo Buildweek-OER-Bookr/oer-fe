@@ -34,36 +34,6 @@ export const DELETE_REVIEW_SUCCESS = "DELETE_REVIEW_SUCCESS";
 export const DELETE_REVIEW_FAILURE = "DELETE_REVIEW_FAILURE";
 export const SEARCH_INPUT_CHANGE = "SEARCH_INPUT";	
 
-
-// export const login = ( history, credentials ) => {
-//   return dispatch => {
-//     dispatch({ type: LOGIN_START });
-//   axios
-//   .post( `${BASE_URL}`, credentials)
-//   .post( `${BASE_URL}`, credentials)
-//   .then(res => {
-//     dispatch({ type:  LOGIN_SUCCESS});
-//     localStorage.setItem("token", res.data);
-//     history.push("/Dashboard");
-//   }) 
-//   .catch(err => console.log("login error ", err));
-
-// };
-
-
-// export const register =  ( history, credentials ) => {
-//   return dispatch => {
-//     dispatch({ type: REGISTER_START });
-//     axios
-//   .post( `${BASE_URL}`, credentials)
-//     .then(res => {
-//       dispatch({ type: REGISTER_SUCCESS});
-//       localStorage.setItem("token", res.data);
-//       history.push("/Dashboard");
-//     }) 
-//     .catch(err => console.log("login error ", err));
-
-// };
 export const updateHeader = () => {
 	return dispatch => {
 		dispatch({ type: UPDATE_HEADER_LOGIN })
@@ -74,13 +44,11 @@ export const getData = (id) => {
 	return dispatch => {
 		dispatch({ type: FETCH_BOOKS_START });
 		const bookList = axiosWithAuth().get(`${BASE_URL}/books`);
-		//all the book in database
 		const filterList = axiosWithAuth().get(`${BASE_URL}/users/${id}`);
-		// user.books = = wishlist -> 2 books
 		Promise.all([bookList, filterList])
 			.then(([bookListResponse, filterListResponse]) => {
 				const excludeBooks = filterListResponse.data.books.map(book => book.id);
-				console.log(filterListResponse.data.books);
+				//console.log(filterListResponse.data.books);
 				const newBookList = bookListResponse.data.filter(book => !excludeBooks.includes(book.id));
 				dispatch({ type: FETCH_BOOKS_SUCCESS, payload: newBookList });
 			})
@@ -98,7 +66,7 @@ export const deleteData = (data) => {
 		axiosWithAuth()
 			.post(`${BASE_URL}/wishlist`, data)
 			.then(res => {
-				console.log("book deleted", res);
+				//console.log("book deleted", res);
 				dispatch({ type: DELETE_BOOKS_SUCCESS, payload: res.data })
 			})
 			.catch(error => {
@@ -108,18 +76,6 @@ export const deleteData = (data) => {
 	}
 }
 
-// export const getOneBook = id => dispatch => {
-// 	axios
-// 	  .get(`${BASE_URL}/books/${id}`)
-// 	  .then(res => {
-// 		dispatch({
-// 		  type: FETCH_BOOK_BY_ID,
-// 		  payload: res.data.book[0],
-// 		  reviews: res.data.reviews
-// 		});
-// 	  })
-// 	  .catch(err => console.log(err));
-//   };
 export const search = input => {	
 	return dispatch => {	
 	dispatch({ type: SEARCH_INPUT_CHANGE, payload: input });	
@@ -132,7 +88,7 @@ export const addReview = (newReview) => {
 		axiosWithAuth()
 			.post(`${BASE_URL}/reviews`, newReview)
 			.then(res => {
-				console.log(newReview)
+				//console.log(newReview)
 				dispatch({ type: ADD_REVIEW_SUCCESS, payload: res.data });
 			})
 			.catch(err => {
@@ -182,7 +138,7 @@ export const deleteReview = (id) => {
 			// 			reviews: res.data.reviews
 			// 		  });
 			// 		})	
-					console.log("REVIEW deleted", res);
+					//console.log("REVIEW deleted", res);
 				dispatch({ type: DELETE_REVIEW_SUCCESS, payload: res.data })
 			})
 			.catch(error => {

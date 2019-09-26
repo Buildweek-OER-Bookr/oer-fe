@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Modal from './Modal';
 import { addReview, deleteReview, getData, deleteData } from "../actions"
-// import DeleteBookModal from "./DeleteBook"
-
 
 const StyledDetails = styled.div`
 	.book {
@@ -103,6 +101,11 @@ const StyledDetails = styled.div`
 				color: ${props => props.theme.darkblue};
 			}
 		}
+		.stars {
+			position: absolute;
+			bottom: 1.25rem;
+			left:20px;
+		}
 		&:hover {
 			border: 1px solid ${props => props.theme.blue};
 			.delete-btn {
@@ -143,10 +146,6 @@ const Book = (props) => {
 	const userid = localStorage.getItem("user_id");
 	const { match, books, dispatch } = props;
 	const book = books.find(book => book.id.toString() === match.params.bookid.toString());
-	// cont deleteReview = (id, e) => {
-	// 	e.preventDefault();
-	// 	deleteReview( id);
-	// }
 	if (!book) {
 		return (
 			<div className="content">
@@ -157,7 +156,8 @@ const Book = (props) => {
 
 	const addReviewOnSubmit = (e) => {
 		e.preventDefault();
-		addReview({review:"text", stars:1, reviewer_id:1 , book_id: 1 })(dispatch);
+		const form = Object.values(e.target).reduce((obj, field) => { obj[field.name] = field.value; return obj }, {})
+		addReview({review: form.review, stars: form.stars, reviewer_id: userid, book_id: book.id })(dispatch);
 		getData(userid)(dispatch);
 		toggleAddReviewModal();
 	}
@@ -272,10 +272,6 @@ const Book = (props) => {
 									<i className="icon-download"></i> Access Link
 								</a>
 							</button>
-							{/* <button><i className="icon-trash-empty"></i> Remove</button>
-							<DeleteBookModal 
-							 id={book.id} history={props.history}
-							 /> */}
 							{book.reviews.length === 0 ? <button onClick={toggleAddReviewModal}>
 								<i className="icon-plus"></i> Add Review
 							</button> : null}
@@ -296,7 +292,12 @@ const Book = (props) => {
 								<blockquote>
 									{review.review}
 								</blockquote>
-								<div className="review-author">review by <span>{review.user}</span></div>
+								<div className="stars">
+									{
+										ratingToStars(review.stars)
+									}
+								</div>
+								<div className="review-author">review by <span>{review.name}</span></div>
 								<div className="delete-btn" onClick={e => toggleDeleteReviewModal(e, review.id)}>
 									<i className="icon-trash-empty"></i>
 									<span>Delete review</span>

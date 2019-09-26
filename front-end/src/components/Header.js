@@ -117,20 +117,20 @@ const StyledHeader = styled.header`
 `;
 
 const Header = (props) => {
-	const { header } = props;
+	const { menu, contacts } = props;
 	return (
 		<StyledHeader>
 			<div className="logo">
 				<Link to="/dashboard"><img src={logo} alt="OER Bookr" /></Link>
 			</div>
 			<div className="menu">
-				{header.menu.map(page => (
+				{menu.map(page => (
 					<NavLink key={page.url} to={page.url} activeClassName="active">{page.name}</NavLink>
 				))}
 			</div>
 			<div className="contacts">
 				<div className="list">
-					{header.contacts.map(link => <a key={link.type} href={link.url} target="_blank" rel="noopener noreferrer">
+					{contacts.map(link => <a key={link.type} href={link.url} target="_blank" rel="noopener noreferrer">
 						<i className={`icon-${link.type}`}></i>
 					</a>
 					)}
@@ -140,5 +140,5 @@ const Header = (props) => {
 	)
 }
 
-const mapStateToProps = state => ({ header: state.header });
+const mapStateToProps = state => ({ menu: state.menu, contacts: state.contacts });
 export default connect(mapStateToProps)(Header);
