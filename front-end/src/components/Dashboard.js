@@ -1,30 +1,31 @@
-
 import React from 'react';
-import styled from 'styled-components';
 import BookList from "./BookList";
+import { connect } from 'react-redux';
 import { Input } from 'antd';
 const { Search } = Input;
 
 const Dashboard = (props) => {
-	//const { history, location, match } = props;
+	const { dispatch, search } = props;
+	const onSearch = text => {
+		console.log('searching:', text);
+	}
 	return (
 		<>
-		<div className="container">
-			<h1>Dashboard</h1>
-			<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Itaque est deserunt nihil rerum illo ut, nesciunt repellendus. Aliquam possimus quae totam adipisci perspiciatis debitis tempora expedita voluptatum odio, sapiente id.</p>
+			<div className="content">
+				<h1>Introduction @</h1>
+				<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Itaque est deserunt nihil rerum illo ut, nesciunt repellendus. Aliquam possimus quae totam adipisci perspiciatis debitis tempora expedita voluptatum odio, sapiente id.</p>
 
-			<h2>Search by book title</h2>
-			<Search
-				enterButton
-				onSearch={search => console.log(search)}
-				placeholder="Search by book title"
-				searchBar={this.search}
-			/>
-		</div>
-		<BookList/>
-
+				<h2>Search by book title, author, publisher or tag</h2>
+				<Search
+					enterButton
+					onSearch={onSearch}
+					placeholder="Search here"
+				/>
+			</div>
+			<BookList />
 		</>
 	)
 };
 
-export default Dashboard;
+const mapStateToProps = state => ({ search: state.search })
+export default connect(mapStateToProps)(Dashboard);

@@ -1,16 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 const StyledBooks = styled.div`
 	h4 {
 		padding-bottom: 15px;
-	}
-	.book-list {
-		display: grid;
-		grid-template-columns: 1fr 1fr 1fr;
-		grid-template-rows: minmax(30px, auto);
-		grid-gap: 30px 30px;
 	}
 	.book {
 		padding: 30px;
@@ -18,19 +13,17 @@ const StyledBooks = styled.div`
 		color: ${props => props.theme.black};
 		border: 1px solid ${props => props.theme.blue};
 		background-color: ${props => props.theme.white};
-		grid-column: span 2;
-		grid-row: span 1;
-		&:nth-child(6n + 1) {
-			grid-column: span 1;
-			grid-row: span 2;
-		}
-		&:nth-child(6n + 5) {
-			grid-column: span 1;
-			grid-row: span 2;
-		}
 		p {
-			font-size: 1.25rem;
-			line-height: 1.7rem;
+			font-size: 1.2rem;
+			line-height: 1.5rem;
+		}
+		.moreinfo {
+			padding-top: 10px;
+			p {	
+				padding-top: 10px;
+				font-size: 1.1rem;
+				color: ${props => props.theme.blue};
+			}
 		}
 		h4, p {
 			transition: all .33s ease-in-out;
@@ -44,48 +37,34 @@ const StyledBooks = styled.div`
 	}
 `;
 
-const Dashboard = (props) => {
-	//const { history, location, match } = props;
-	const books = [
-		{
-			id: 1,
-			title: 'Book Title Here',
-			desc: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Inventore, sit aspernatur voluptas consequatur cupiditate dignissimos ducimus eum explicabo, in aperiam aliquam. Perspiciatis culpa dolor laboriosam quisquam provident, laborum nihil eum!'
-		},
-		{
-			id: 2,
-			title: 'Book Title Here',
-			desc: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Inventore, sit aspernatur voluptas consequatur cupiditate dignissimos ducimus eum explicabo, in aperiam aliquam. Perspiciatis culpa dolor laboriosam quisquam provident, laborum nihil eum!'
-		},
-		{
-			id: 3,
-			title: 'Book Title Here',
-			desc: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Inventore, sit aspernatur voluptas consequatur cupiditate dignissimos ducimus eum explicabo, in aperiam aliquam. Perspiciatis culpa dolor laboriosam quisquam provident, laborum nihil eum!'
-		},
-		{
-			id: 4,
-			title: 'Book Title Here',
-			desc: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Inventore, sit aspernatur voluptas consequatur cupiditate dignissimos ducimus eum explicabo, in aperiam aliquam. Perspiciatis culpa dolor laboriosam quisquam provident, laborum nihil eum!'
-		},
-		{
-			id: 5,
-			title: 'Book Title Here',
-			desc: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Inventore, sit aspernatur voluptas consequatur cupiditate dignissimos ducimus eum explicabo, in aperiam aliquam. Perspiciatis culpa dolor laboriosam quisquam provident, laborum nihil eum!'
-		},
-		{
-			id: 6,
-			title: 'Book Title Here',
-			desc: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Inventore, sit aspernatur voluptas consequatur cupiditate dignissimos ducimus eum explicabo, in aperiam aliquam. Perspiciatis culpa dolor laboriosam quisquam provident, laborum nihil eum!'
-		}
-	];
+const BookList = (props) => {
+	const { books, search } = props;
+	const searchedBooks = search ? books.filter(book => {
+		let authors = false;
+		book.authors.forEach(author => {
+			if (!authors) authors = author.name.includes(search)
+		});
+		return book.title.includes(search) || book.publisher.includes(search) || authors
+	}) : books;
 	return (
-		<StyledBooks className="container noborder">
+		<StyledBooks className="content noborder">
 			<h1>Book List</h1>
-			<div className="book-list">
+			<div className="grid books">
 				{
-					books.map(book => <Link key={book.id} to={`/booklist/${book.id}`} className="book">
+					searchedBooks.map(book => <Link key={book.id} to={`/books/${book.id}`} className="grid-item book">
 						<h4>{book.title}</h4>
-						<p>{book.desc}</p>
+						<p>{book.description}</p>
+						<div className="moreinfo">
+							<p>Written by {
+								book.authors.map((author, i) => (
+									<span key={author.id}>
+										{author.name}{i !== book.authors.length - 1 ? ', ' : null}
+									</span>
+								)
+								)
+							}</p>
+							<p>Published by {book.publisher}</p>
+						</div>
 					</Link>)
 				}
 			</div>
@@ -93,4 +72,5 @@ const Dashboard = (props) => {
 	)
 };
 
-export default Dashboard;
+const mapStateToProps = state => ({ books: state.books, search: state.search });
+export default connect(mapStateToProps)(BookList);

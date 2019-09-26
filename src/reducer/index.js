@@ -21,43 +21,15 @@ import {
 	DELETE_REVIEW_FAILURE,
 	ADD_REVIEW_START,
 	ADD_REVIEW_SUCCESS,
-	ADD_REVIEW_FAILURE
+	ADD_REVIEW_FAILURE,
+	SEARCH_INPUT_CHANGE
+	
 } from "../actions";
 
 const initialState = {
-	header: {
-		menu: [
-			{
-				name: 'Home',
-				url: '/dashboard',
-			},
-			{
-				name: 'Book List',
-				url: '/books',
-			},
-			{
-				name: 'Logout',
-				url: '/logout',
-			}
-		],
-		contacts: [
-			{
-				url: 'https://twitter.com/oerbookr',
-				type: 'twitter'
-			},
-			{
-				url: 'https://www.linkedin.com/in/oerbookr',
-				type: 'linkedin'
-			},
-			{
-				url: 'https://github.com/orgs/Buildweek-OER-Bookr/',
-				type: 'github'
-			},
-		]
-	},
 	books: [],
 	reviews: [],
-	search: "",
+	searchInput: ""
 	error: ""
 };
 
@@ -88,7 +60,7 @@ export const reducer = (state = initialState, action) => {
 		case DELETE_BOOKS_SUCCESS:
 			return {
 				...state,
-				// books: [...state.books, action.payload],
+				books: [...state.books, action.payload],
 				error: ""
 			};
 		case DELETE_BOOKS_FAILURE:
@@ -121,7 +93,7 @@ export const reducer = (state = initialState, action) => {
 		case ADD_REVIEW_SUCCESS:
 			return {
 				...state,
-				// review: [...state.review, action.payload],
+				review: [...state.review, action.payload],
 				error: ""
 			};
 		case ADD_REVIEW_FAILURE:
@@ -136,10 +108,9 @@ export const reducer = (state = initialState, action) => {
 				error: ""
 			};
 		case DELETE_REVIEW_SUCCESS:
-				console.log("...state", state);
 			return {
 				...state,
-				// review: [...state.review, action.payload],
+				review: [...state.review, action.payload],
 				error: ""
 			};
 		case DELETE_REVIEW_FAILURE:
@@ -147,7 +118,10 @@ export const reducer = (state = initialState, action) => {
 				...state,
 				error: action.payload
 			};
-
+		case SEARCH_INPUT_CHANGE:
+			return {
+				searchInput: action.payload
+			};
 		default:
 			return state;
 	}
