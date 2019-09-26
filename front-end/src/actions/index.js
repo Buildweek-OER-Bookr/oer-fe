@@ -77,7 +77,7 @@ const configRequest = (method, url, data, token) => {
 export const getData = () => {
 	return dispatch => {
 		dispatch({ type: FETCH_BOOKS_START });
-		axios(configRequest('GET', `${BASE_URL}/books`, null, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1lbHF1aSIsImlhdCI6MTU2OTQwMjg3NCwiZXhwIjoxNTY5NDg5Mjc0fQ.VHXAxUCFjeNYqkBcSMZ-QkhEtnuxGoqGBXKKQehEsgY'))
+		axios(configRequest('GET', `${BASE_URL}/books`, null, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNTY5NDMyMDU2LCJleHAiOjE1Njk1MTg0NTZ9.82ACdIrcBapQXtbuT9bPe7Xd5QVNmC6UQOxOw8vQUws'))
 			.then(res => {
 				dispatch({ type: FETCH_BOOKS_SUCCESS, payload: res.data });
 			})

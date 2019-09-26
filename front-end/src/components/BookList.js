@@ -49,11 +49,14 @@ const StyledBooks = styled.div`
 const BookList = (props) => {
 	const { books, search } = props;
 	const searchedBooks = search ? books.filter(book => {
-		let authors = false;
+		let byAuthors = false;
 		book.authors.forEach(author => {
-			if (!authors) authors = author.name.includes(search)
+			if (!byAuthors) byAuthors = author.name.includes(search)
 		});
-		return book.title.includes(search) || book.publisher.includes(search) || authors
+		const byTitle = book.title ? book.title.includes(search) : false;
+		const byPublisher = book.publisher ? book.publisher.includes(search) : false;
+		const byTag = book.tag ? book.tag.includes(search) : false;
+		return byTitle || byPublisher || byAuthors || byTag;
 	}) : books;
 	return (
 		<StyledBooks className="content noborder">
