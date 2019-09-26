@@ -131,6 +131,10 @@ const StyledDetails = styled.div`
 const Book = (props) => {
 	const { match, books } = props;
 	const book = books.find(book => book.id.toString() === match.params.bookid.toString());
+	// cont deleteReview = (id, e) => {
+	// 	e.preventDefault();
+	// 	deleteReview( id);
+	// }
 	if (!book) {
 		return (
 			<div className="content">

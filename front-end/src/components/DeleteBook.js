@@ -23,7 +23,6 @@ export default class DeleteBookModal extends Component {
   handleClose = () => this.setState({ modalOpen: false });
   
   deleteBook = (id, e) => {
-  handleSubmit = (e, id) => {
     e.preventDefault();
     deleteData( id);
 }
