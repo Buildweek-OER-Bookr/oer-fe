@@ -151,7 +151,8 @@ export const reducer = (state = initialState, action) => {
 			};
 			case SEARCH_INPUT_CHANGE:
 					return {
-						searchInput: action.payload
+						...state,
+						search: action.payload
 					};
 			
 		default:

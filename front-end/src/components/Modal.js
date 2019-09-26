@@ -85,7 +85,7 @@ const Modal = (props) => {
 						</form>
 					</> : (type === 'deleteBook' ? <>
 						<h4 className="deleting">Are you sure you want to delete this book?</h4>
-						<form>
+						<form onSubmit= {onSubmit}>
 							<button type="submit">Yes</button>
 							<button onClick={onClose}>Cancel</button>
 						</form>

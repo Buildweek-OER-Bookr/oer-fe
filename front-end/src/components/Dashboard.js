@@ -1,11 +1,12 @@
 import React from 'react';
 import BookList from "./BookList";
 import { connect } from 'react-redux';
+import {search} from "../actions"
 
 const Dashboard = (props) => {
-	const { dispatch, search } = props;
+	const { dispatch } = props;
 	const onSearch = e => {
-		console.log('searching:', e.target.value);
+		search(e.target.value)(dispatch);
 	}
 	return (
 		<>
@@ -18,7 +19,7 @@ const Dashboard = (props) => {
 					id="search"
 					name="search"
 					type="text"
-					value={search}
+					value={props.search}
 					onChange={onSearch}
 					placeholder="Search by book title, author, publisher or tag"
 				/>

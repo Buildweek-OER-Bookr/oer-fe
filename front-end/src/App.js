@@ -28,7 +28,7 @@ const App = (props) => {
 	const { dispatch, books } = props;
 	useEffect(() => {
 		if(books.length === 0) {
-			getData()(dispatch);
+			getData(localStorage.getItem("user_id"))(dispatch);
 		}
 		return () => { };
 	}, []);

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Modal from './Modal';
-import { addReview, deleteReview, getData } from "../actions"
+import { addReview, deleteReview, getData, deleteData } from "../actions"
 // import DeleteBookModal from "./DeleteBook"
 
 
@@ -140,6 +140,7 @@ const StyledDetails = styled.div`
 
 
 const Book = (props) => {
+	const userid = localStorage.getItem("user_id");
 	const { match, books, dispatch } = props;
 	const book = books.find(book => book.id.toString() === match.params.bookid.toString());
 	// cont deleteReview = (id, e) => {
@@ -157,7 +158,7 @@ const Book = (props) => {
 	const addReviewOnSubmit = (e) => {
 		e.preventDefault();
 		addReview({review:"text", stars:1, reviewer_id:1 , book_id: 1 })(dispatch);
-		getData()(dispatch);
+		getData(userid)(dispatch);
 		toggleAddReviewModal();
 	}
 
@@ -166,10 +167,18 @@ const Book = (props) => {
 		setDeleteReviewModal(0);
 		if(deleteReviewModal > 0) {
 			deleteReview(deleteReviewModal)(dispatch);
-			getData()(dispatch);
+			getData(userid)(dispatch);
 		}
 	}	
 
+	const deleteBookOnSubmit = (e) => {
+		e.preventDefault();
+		setDeleteBookModal(0);
+		if(deleteBookModal > 0) {
+			deleteData({ book_id: deleteBookModal, user_id: userid })(dispatch);
+			getData(userid)(dispatch);
+		}
+	}
 	const [reviewModal, setReviewModal] = useState(false);
 	const toggleAddReviewModal = (e) => {
 		setReviewModal(!reviewModal);
@@ -182,10 +191,12 @@ const Book = (props) => {
 	const hideDeleteReviewModal = () => {
 		setDeleteReviewModal(0);
 	}
-
-	const [deleteBookModal, setDeleteBookModal] = useState(false);
-	const toggleDeleteBookModal = (e) => {
-		setDeleteBookModal(!deleteBookModal);
+	const hideDeleteBookModal = () => {
+		setDeleteBookModal(0);
+	}
+	const [deleteBookModal, setDeleteBookModal] = useState(0);
+	const toggleDeleteBookModal = (e, id) => {
+		setDeleteBookModal(id);
 	}
 
 	const ratingToStars = rating => {
@@ -268,7 +279,7 @@ const Book = (props) => {
 							{book.reviews.length === 0 ? <button onClick={toggleAddReviewModal}>
 								<i className="icon-plus"></i> Add Review
 							</button> : null}
-							<button onClick={toggleDeleteBookModal}><i className="icon-trash-empty"></i> Remove</button>
+							<button onClick={e => toggleDeleteBookModal(e, book.id)}><i className="icon-trash-empty"></i> Remove</button>
 						</div>
 					</div>
 				</div>
@@ -310,7 +321,8 @@ const Book = (props) => {
 			/>
 			<Modal 
 				visible={deleteBookModal} 
-				onClose={toggleDeleteBookModal}
+				onClose={hideDeleteBookModal}
+				onSubmit={deleteBookOnSubmit}
 				type="deleteBook" 
 				data={book}
 			/>
