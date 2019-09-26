@@ -11,10 +11,17 @@ const Dashboard = (props) => {
 		<>
 			<div className="content">
 				<h1>Introduction</h1>
-				<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Itaque est deserunt nihil rerum illo ut, nesciunt repellendus. Aliquam possimus quae totam adipisci perspiciatis debitis tempora expedita voluptatum odio, sapiente id.</p>
+				<p>OER Bookr is a teacher's source for open educational resources (OER). Picture the Yelp of textbooks, a social platform for peer reviewed, open licensed textbooks.</p>
 
 				<h2>Search by book title, author, publisher or tag</h2>
-				<input id="search" name="search" type="text" value={search} onChange={onSearch}/>
+				<input
+					id="search"
+					name="search"
+					type="text"
+					value={search}
+					onChange={onSearch}
+					placeholder="Search by book title, author, publisher or tag"
+				/>
 			</div>
 			<BookList />
 		</>
