@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Modal from './Modal';
+import { addReview, deleteReview, getData } from "../actions"
 // import DeleteBookModal from "./DeleteBook"
 
 
@@ -139,7 +140,7 @@ const StyledDetails = styled.div`
 
 
 const Book = (props) => {
-	const { match, books } = props;
+	const { match, books, dispatch } = props;
 	const book = books.find(book => book.id.toString() === match.params.bookid.toString());
 	// cont deleteReview = (id, e) => {
 	// 	e.preventDefault();
@@ -152,21 +153,38 @@ const Book = (props) => {
 			</div>
 		);
 	}
+
+	const addReviewOnSubmit = (e) => {
+		e.preventDefault();
+		addReview({review:"text", stars:1, reviewer_id:1 , book_id: 1 })(dispatch);
+		getData()(dispatch);
+		toggleAddReviewModal();
+	}
+
+	const deleteReviewOnSubmit = (e) => {
+		e.preventDefault();
+		setDeleteReviewModal(0);
+		if(deleteReviewModal > 0) {
+			deleteReview(deleteReviewModal)(dispatch);
+			getData()(dispatch);
+		}
+	}	
+
 	const [reviewModal, setReviewModal] = useState(false);
 	const toggleAddReviewModal = (e) => {
-		e.preventDefault();
 		setReviewModal(!reviewModal);
 	}
 
-	const [deleteReviewModal, setDeleteReviewModal] = useState(false);
-	const toggleDeleteReviewModal = (e) => {
-		e.preventDefault();
-		setDeleteReviewModal(!deleteReviewModal);
+	const [deleteReviewModal, setDeleteReviewModal] = useState(0);
+	const toggleDeleteReviewModal = (e, id) => {
+		setDeleteReviewModal(id);
+	}
+	const hideDeleteReviewModal = () => {
+		setDeleteReviewModal(0);
 	}
 
 	const [deleteBookModal, setDeleteBookModal] = useState(false);
 	const toggleDeleteBookModal = (e) => {
-		e.preventDefault();
 		setDeleteBookModal(!deleteBookModal);
 	}
 
@@ -268,7 +286,7 @@ const Book = (props) => {
 									{review.review}
 								</blockquote>
 								<div className="review-author">review by <span>{review.user}</span></div>
-								<div className="delete-btn" onClick={toggleDeleteReviewModal}>
+								<div className="delete-btn" onClick={e => toggleDeleteReviewModal(e, review.id)}>
 									<i className="icon-trash-empty"></i>
 									<span>Delete review</span>
 								</div>
@@ -280,14 +298,15 @@ const Book = (props) => {
 			<Modal 
 				visible={reviewModal} 
 				onClose={toggleAddReviewModal}
+				onSubmit={addReviewOnSubmit}
 				type="reviewForm" 
 				data={book}
 			/>
 			<Modal 
 				visible={deleteReviewModal} 
-				onClose={toggleDeleteReviewModal}
+				onClose={hideDeleteReviewModal}
+				onSubmit={deleteReviewOnSubmit}
 				type="deleteReview" 
-				data={book}
 			/>
 			<Modal 
 				visible={deleteBookModal} 

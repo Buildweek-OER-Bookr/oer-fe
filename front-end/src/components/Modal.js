@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import {addReview, deleteReview} from "../actions"
+import { addReview, deleteReview, getData } from "../actions"
 
 const StyledModal = styled.div`
 	position: fixed;
@@ -58,15 +58,10 @@ const StyledModal = styled.div`
 
 
 const Modal = (props) => {
-	const { visible, onClose, type, data, dispatch } = props;
+	const { visible, onClose, onSubmit, type, data, dispatch } = props;
 
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		addReview({review:"text", stars:1, reviewer_id:1 , book_id: 1 })(dispatch);
-
-	}
 	return (
-		<StyledModal className={`popup_${type} ${visible ? 'show' : ''}`}>
+		<StyledModal className={`popup_${type} ${Number(visible) !== 0 ? 'show' : ''}`}>
 			<div className="popup-content">
 				<div className="delete-btn" onClick={onClose}>
 					<i className="icon-cancel"></i>
@@ -75,7 +70,7 @@ const Modal = (props) => {
 				{
 					type === 'reviewForm' ? <>
 						<h4>Reviewing {data.title}</h4>
-						<form onSubmit={handleSubmit}>
+						<form onSubmit={onSubmit}>
 							<textarea
 								id="review"
 								name="review"
@@ -84,7 +79,7 @@ const Modal = (props) => {
 						</form>
 					</> : (type === 'deleteReview' ? <>
 						<h4 className="deleting">Are you sure you want to delete this review?</h4>
-						<form>
+						<form onSubmit={onSubmit}>
 							<button type="submit">Yes</button>
 							<button onClick={onClose}>Cancel</button>
 						</form>
