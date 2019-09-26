@@ -1,111 +1,141 @@
-import React, { useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import axiosWithAuth from "../axiosWithAuth";
 import { Link } from 'react-router-dom';
 import { Form, Field, withFormik } from "formik";
-import { Form as SemanticForm, Segment, Button, Grid, Header, Image, Message } from "semantic-ui-react";
+//import { Form as SemanticForm, Segment, Button, Grid, Header, Image, Message } from "semantic-ui-react";
 import * as yup from "yup";
 // import logo from '../images/logo.png';
 
 
 const Registration = ({ errors, touched, status, history }) => {
-//   const authContext = useContext(AuthContext);
-//   const { register, isAuthenticated, userInfo } = authContext;
+	//   const authContext = useContext(AuthContext);
+	//   const { register, isAuthenticated, userInfo } = authContext;
 
-//   useEffect(() => {
-//     if (status) {
-//       register(status);
-//       history.push("/Dashboard");
-//     }
+	//   useEffect(() => {
+	//     if (status) {
+	//       register(status);
+	//       history.push("/Dashboard");
+	//     }
 
-//     if (isAuthenticated) {
-//       if (userInfo && userInfo.userRoles.length > 1) {
-//         history.push("/Dashboard");
-      
-//     }
-//   }, [status]);
+	//     if (isAuthenticated) {
+	//       if (userInfo && userInfo.userRoles.length > 1) {
+	//         history.push("/Dashboard");
 
-  return (
+	//     }
+	//   }, [status]);
+
 	
-	  
-    <Grid container centered style={{ height: '106vh' }} verticalAlign='middle'>
-      <Grid.Column style={{ maxWidth: 450 }}>
-        <Form className="ui form" size="large">
-		<Segment stacked>
-		<Header as='h2' color='gray' textAlign='center' style={{ padding: '2vh' }}  >
-        {/*<Image src={logo} alt="OER Bookr"/>*/} Create a new account
-      </Header>
-          <SemanticForm.Field>
-            <label>
-              Email
-              <Field type="email" name="useremail" />
-            </label>
-          </SemanticForm.Field>
-          <SemanticForm.Field>
-            <label>
-              Username
-              <Field type="text" name="username" />
-            </label>
-          </SemanticForm.Field>
-          <SemanticForm.Field>
-            <label>
-              Password
-              <Field type="password" name="password" />
-            </label>
-          </SemanticForm.Field>
-          <SemanticForm.Field>
-            <label>
-              Confirm Password
-              <Field type="password" name="password2" />
-            </label>
-          </SemanticForm.Field>
-		  
-          <Button primary type="submit" fluid size='large'> 
-            Register
-          </Button>
-		  </Segment>
-        </Form>
-		<Message>
-       Already a Member? <Link to="/login" >Click here to sign in </Link>
-      </Message>
-      </Grid.Column>
-    </Grid>
-  );
+	const [credentials, setCredentials] = useState({
+		name: "",
+		username: "",
+		password: "",
+		password2: ""
+	});
+
+	const handleChange = e => {
+		setCredentials({ ...credentials, [e.target.name]: e.target.value });
+	};
+
+	const handleSubmit = e => {
+		e.preventDefault();
+
+		axiosWithAuth()
+			.post(`auth/register`, credentials)
+			.then(res => {
+				console.log(res);
+				//localStorage.setItem("token", res.data.payload);
+				//history.push("/dashboard");
+			})
+			.catch(err => console.log("register error", err));
+		setCredentials({ name: '', username: '', password: '', password2: '' })
+
+	};
+	return (
+		<div id="signup" className="content">
+			<h1>Sign Up</h1>
+			<form onSubmit={handleSubmit}>
+				<label htmlFor="name">Name:</label>
+				<input
+					type="text"
+					value={credentials.name}
+					id="name"
+					name="name"
+					placeholder="Name"
+					onChange={handleChange}
+				/>
+				<label htmlFor="signup_username">Username:</label>
+				<input
+					type="text"
+					value={credentials.username}
+					id="signup_username"
+					name="username"
+					placeholder="Username"
+					onChange={handleChange}
+				/>
+				<label htmlFor="signup_password">Password:</label>
+				<input
+					type="password"
+					value={credentials.password}
+					id="signup_password"
+					name="password"
+					placeholder="Password"
+					onChange={handleChange}
+					autoComplete="new-password"
+				/>
+				<label htmlFor="password2">Confirm Password:</label>
+				<input
+					type="password"
+					value={credentials.password2}
+					id="password2"
+					name="password"
+					placeholder="Password"
+					onChange={handleChange}
+					autoComplete="new-password"
+				/>
+				<button type="submit">Sign Up</button>
+				<a href="#login">Already have an account? Login here!</a>
+			</form>
+		</div>
+	);
 };
-
+/*
 const FormikRegistration = withFormik({
-  mapPropsToValues: ({
-    useremail,
-    username,
-    password,
-    password2
-  }) => {
-    return {
-      useremail: useremail || "",
-      username: username || "",
-      password: password || "",
-      password2: password2 || ""
-    };
-  },
+	mapPropsToValues: ({
+		name,
+		username,
+		password,
+		password2
+	}) => {
+		return {
+			name: name || "",
+			username: username || "",
+			password: password || "",
+			password2: password2 || ""
+		};
+	},
 
-  validationSchema: yup.object().shape({
-    useremail: yup
-      .string()
-      .required("You must provide an email.")
-      .email("The email provided is not valid."),
-    username: yup
-      .string()
-      .required("You must provide a username.")
-      .min(5, "Your username must be at least 5 characters long."),
-    password: yup
-      .string()
-      .required("You must provide a password.")
-      .min(6, "Your password must be at least 6 characters long."),
-    password2: yup
-      .string()
-      .required("You must confirm your password.")
-      .oneOf([yup.ref("password")], "The passwords do not match.")
-  }),
+	validationSchema: yup.object().shape({
+		name: yup
+			.string()
+			.required("You must provide a name.")
+			.min(2, "Your name must be at least 2 characters long."),
+		username: yup
+			.string()
+			.required("You must provide a username.")
+			.min(5, "Your username must be at least 5 characters long."),
+		password: yup
+			.string()
+			.required("You must provide a password.")
+			.min(6, "Your password must be at least 6 characters long."),
+		password2: yup
+			.string()
+			.required("You must confirm your password.")
+			.oneOf([yup.ref("password")], "The passwords do not match.")
+	}),
 
 
 })(Registration);
 
 export default FormikRegistration;
+*/
+export default Registration;

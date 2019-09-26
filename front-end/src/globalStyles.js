@@ -72,15 +72,19 @@ export default createGlobalStyle`
 	}
 	
 	h1, h2, h3, h4 {
+		color: ${props => props.theme.darkblue};
 		font-family: ${props => props.theme.fonts.josefin};
 		font-weight: 300;
 	}
 	h1 {
 		margin-left: -0.09em;
 		font-size: 5rem;
+		padding-bottom: 30px;
 	}
 	h2 {
 		font-size: 2.5rem;
+		padding-top: 30px;
+		padding-bottom: 15px;
 	}
 	h3 {
 		font-size: 2.25rem;
@@ -100,7 +104,6 @@ export default createGlobalStyle`
 		color: inherit;
 		text-decoration: none;
 	}
-
 	.content {
 		padding: 50px 25px 75px;
 		border-bottom: 1px solid ${props => props.theme.darkblue};
@@ -110,22 +113,11 @@ export default createGlobalStyle`
 		&.noborder {
 			border-bottom: none;
 		}
-		h1, h2, h3, h4 {
-			color: ${props => props.theme.darkblue};
-		}
-		h1 {
-			padding-bottom: 30px;
-		}
-		h2 {
-			padding-top: 30px;
-			padding-bottom: 15px;
-		}
 	}
-
 	.grid {
 		display: grid;
 		grid-template-columns: 1fr;
-		grid-template-rows: minmax(15rem, auto);
+		grid-template-rows: 1fr;
 		grid-gap: 30px 30px;
 		@media screen and (min-width: 1280px) {
 			grid-template-columns: 1fr 1fr 1fr;
@@ -145,13 +137,14 @@ export default createGlobalStyle`
 				grid-column: span 1;
 				grid-row: span 2;
 			}
-			&:last-child:nth-child(6n + 1) {
+			&:last-child:nth-child(6n + 1), &:last-child:nth-child(6n + 4) {
 				grid-column: span 3;
 				grid-row: span 1;
 			}
 		}
 	}
 	.delete-btn {
+		cursor: pointer;
 		position: absolute;
 		bottom: 20px;
 		right: 20px;
@@ -181,5 +174,113 @@ export default createGlobalStyle`
 				transition: max-width .8s cubic-bezier(.5, 0, 1, 0) 0s, max-height .8s cubic-bezier(.5, 0, 1, 0) 0s;
 			}
 		}
+	}
+	.login-flex {
+		width: 100%;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		& > :first-child, & > :last-child {
+			flex-basis: 100%;
+			max-width: 100%;
+		}
+		@media screen and (min-width: 1280px) {
+			& > :first-child, & > :last-child {
+				flex-basis: 50%;
+				max-width: 50%;
+			}
+			& > :last-child {
+				border-left: 1px solid ${props => props.theme.darkblue};
+			}
+		}
+	}
+	label, input, textarea {
+		display: block;
+		width: 100%;
+		font-size: 1.5rem;
+		line-height: 3rem;
+	}
+	label {
+		color: ${props => props.theme.blue};
+		font-family: ${props => props.theme.fonts.josefin};
+	}
+	input, textarea {
+		appearance: none;
+		padding: 0 15px;
+		margin-bottom: 30px;
+		color: ${props => props.theme.blue};
+		border: 1px solid ${props => props.theme.blue};
+		transition: all .33s ease-in-out;
+		&:focus {
+			border: 1px solid ${props => props.theme.darkblue};
+			background-color: ${props => props.theme.white};
+		}
+	}
+	input {
+		&::-webkit-input-placeholder {
+			opacity: .5;
+			color: ${props => props.theme.blue};
+		}
+		&::-moz-placeholder {
+			opacity: .5;
+			color: ${props => props.theme.blue};
+		}
+		&:-ms-input-placeholder {
+			opacity: .5;
+			color: ${props => props.theme.blue};
+		}
+	}
+	textarea {
+		max-width: 100%;
+		min-width: 100%;
+		max-height: 12rem;
+		min-height: 6rem;
+		font-size: 1.25rem;
+		line-height: 2rem;
+		padding-top: 10px;
+		padding-bottom: 10px;
+	}
+	form {
+		button {
+			padding: 0 15px .05em 15px;
+		}
+		a {
+			display: block;
+			margin-top: 30px;
+			font-size: 1.25rem;
+			line-height: 2rem;
+			color: ${props => props.theme.blue};
+			text-decoration: underline;
+			&:hover {
+				color: ${props => props.theme.darkblue};
+				text-decoration: underline;
+			}
+		}
+	}
+	button {
+		appearance: none;
+		padding: .05em 20px 0 15px;
+		margin-right: 15px;
+		border: 1px solid ${props => props.theme.blue};
+		background-color: ${props => props.theme.white};
+		font-family: ${props => props.theme.fonts.lato};
+		color: ${props => props.theme.blue};
+		font-size: 1.25rem;
+		line-height: 3rem;
+		transition: all .33s ease-in-out;
+		a {
+			color: ${props => props.theme.blue};
+			transition: all .33s ease-in-out;
+		}
+		&:hover {
+			color: ${props => props.theme.white};
+			background-color: ${props => props.theme.blue};
+			a {
+				color: ${props => props.theme.white};
+			}
+		}
+	}
+	#search {
+		margin-bottom: 0;
 	}
 `;
